@@ -23,4 +23,16 @@
         android:layout_height="2dp"
         android:background="#6F6F6F"/>
 
+    <EditText
+        android:id="@+id/etSacar"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:hint="Valor à ser retirado"
+        android:textStyle="bold|italic"/>
+    <Button
+        android:id="@+id/btnSacar"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Sacar"/>
+
 </LinearLayout>

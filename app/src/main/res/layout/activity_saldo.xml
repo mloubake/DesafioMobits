@@ -22,6 +22,7 @@
         android:layout_height="2dp"
         android:background="#6F6F6F"/>
     <TextView
+        android:id="@+id/txtSaldo"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:background="#D3D3D3"

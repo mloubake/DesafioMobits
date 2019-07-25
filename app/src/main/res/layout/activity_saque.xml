@@ -24,11 +24,12 @@
         android:background="#6F6F6F"/>
 
     <EditText
-        android:id="@+id/etSacar"
+        android:id="@+id/etSaque"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:hint="Valor à ser retirado"
-        android:textStyle="bold|italic"/>
+        android:textStyle="bold|italic"
+        android:inputType="number"/>
     <Button
         android:id="@+id/btnSacar"
         android:layout_width="wrap_content"

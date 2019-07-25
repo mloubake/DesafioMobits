@@ -4,29 +4,29 @@ import java.util.Date;
 
 public class Movimentacao {
 
-    Date data;
-    Date horario;
+    String data;
+    String horario;
     String tipoMovimentacao;
     float valor;
 
-    public Movimentacao(Date data, Date horario, String tipoMovimentacao, float valor) {
+    public Movimentacao(String data, String horario, String tipoMovimentacao, float valor) {
         this.data = data;
         this.horario = horario;
         this.tipoMovimentacao = tipoMovimentacao;
         this.valor = valor;
     }
 
-    public Date getData() {
+    public String  getData() {
         return data;
     }
-    public void setData(Date data) {
+    public void setData(String data) {
         this.data = data;
     }
 
-    public Date getHorario() {
+    public String getHorario() {
         return horario;
     }
-    public void setHorario(Date horario) {
+    public void setHorario(String horario) {
         this.horario = horario;
     }
 

@@ -5,6 +5,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
+import android.widget.Toast;
 
 import br.com.mloubake.desafiomobits.R;
 
@@ -107,6 +108,13 @@ public class FuncionalidadesActivity extends AppCompatActivity {
     }
     //Iniciar Troca de Usuário
     private void iniciarTrocarUsuario() {
+        btnTrocarUsuario.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                FuncionalidadesActivity.this.finish();
+                Toast.makeText(FuncionalidadesActivity.this, "Fazendo Logoff", Toast.LENGTH_SHORT).show();
+            }
+        });
 
     }
 }

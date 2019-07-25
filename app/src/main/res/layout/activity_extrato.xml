@@ -6,8 +6,22 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context=".activity.ExtratoActivity"
-    android:orientation="horizontal">
+    android:orientation="vertical">
 
+    <TextView
+        android:id="@+id/layoutTransferencia"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="@string/extrato"
+        android:textSize="16dp"
+        android:background="#B4B4B4"
+        android:paddingTop="8dp"
+        android:paddingLeft="8dp"
+        android:paddingBottom="8dp"/>
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="2dp"
+        android:background="#6F6F6F"/>
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -37,6 +51,10 @@
             android:padding="8dp"
             android:layout_weight="0.9"/>
     </LinearLayout>
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="2dp"
+        android:background="#6F6F6F"/>
 
     <android.support.v7.widget.RecyclerView
         android:id="@+id/recyclerViewExtrato"

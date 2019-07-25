@@ -1,11 +1,12 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout
+<LinearLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".activity.TransferenciaActivity">
+    tools:context=".activity.TransferenciaActivity"
+    android:orientation="vertical">
 
     <TextView
         android:id="@+id/layoutTransferencia"
@@ -17,6 +18,10 @@
         android:paddingTop="8dp"
         android:paddingLeft="8dp"
         android:paddingBottom="8dp"/>
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="2dp"
+        android:background="#6F6F6F"/>
 
     <EditText
         android:id="@+id/etTransferirPara"
@@ -25,7 +30,14 @@
         android:hint="Conta Corrente do destinatário"
         android:textStyle="bold|italic"
         android:layout_below="@+id/layoutTransferencia"
-        android:layout_marginBottom="16dp"/>
+        android:layout_marginBottom="16dp"
+        android:inputType="number"
+        android:maxLength="5"/>
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="2dp"
+        android:background="#6F6F6F"/>
+
     <EditText
         android:id="@+id/etValorATransferir"
         android:layout_width="match_parent"
@@ -34,10 +46,14 @@
         android:textStyle="bold|italic"
         android:layout_below="@+id/etTransferirPara"
         android:layout_marginBottom="16dp"/>
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="2dp"
+        android:background="#6F6F6F"/>
     <Button
         android:id="@+id/btnTransferir"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="@string/transferir"
         android:layout_below="@id/etValorATransferir"/>
-</RelativeLayout>
+</LinearLayout>

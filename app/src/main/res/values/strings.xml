@@ -1,3 +1,12 @@
 <resources>
     <string name="app_name">Desafio Mobits</string>
+
+    <!-- Textos Botões-->
+    <string name="ver_saldo">Ver Saldo</string>
+    <string name="extrato">Extrato</string>
+    <string name="saque">Saque</string>
+    <string name="deposito">Depósito</string>
+    <string name="transferencia">Transferência</string>
+    <string name="solicitar_visita">Solicitar Visita do Gerente</string>
+    <string name="trocar_usuario">Trocar de Usuário</string>
 </resources>

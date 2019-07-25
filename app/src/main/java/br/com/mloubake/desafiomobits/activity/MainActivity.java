@@ -20,13 +20,18 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        etContaCorrente = findViewById(R.id.etContaCorrente);
-        etContaSenha = findViewById(R.id.etContaSenha);
-        btnLogin = findViewById(R.id.btnLogin);
-
+        setarIds();
         botaoLogin();
     }
 
+    //Seta as id em cada view
+    private void setarIds() {
+        etContaCorrente = findViewById(R.id.etContaCorrente);
+        etContaSenha = findViewById(R.id.etContaSenha);
+        btnLogin = findViewById(R.id.btnLogin);
+    }
+
+    //Função de Login
     private void botaoLogin() {
         btnLogin.setOnClickListener(new View.OnClickListener() {
             @Override

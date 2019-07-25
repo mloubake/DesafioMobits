@@ -9,15 +9,21 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".activity.SaldoActivity"></activity>
-        <activity android:name=".activity.SolicitarGerenteActivity" />
-        <activity android:name=".activity.TransferenciaActivity" />
-        <activity android:name=".activity.DepositoActivity" />
-        <activity android:name=".activity.SaqueActivity" />
-        <activity android:name=".activity.ExtratoActivity" />
+        <activity android:name=".activity.SaldoActivity"
+            android:screenOrientation="portrait"></activity>
+        <activity android:name=".activity.SolicitarGerenteActivity"
+            android:screenOrientation="portrait"/>
+        <activity android:name=".activity.TransferenciaActivity"
+            android:screenOrientation="portrait"/>
+        <activity android:name=".activity.DepositoActivity"
+            android:screenOrientation="portrait"/>
+        <activity android:name=".activity.SaqueActivity"
+            android:screenOrientation="portrait"/>
+        <activity android:name=".activity.ExtratoActivity"
+            android:screenOrientation="portrait"/>
         <activity
             android:name=".activity.FuncionalidadesActivity"
-            android:screenOrientation="portrait" />
+            android:screenOrientation="portrait"/>
         <activity
             android:name=".activity.MainActivity"
             android:screenOrientation="portrait">

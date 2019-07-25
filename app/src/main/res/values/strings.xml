@@ -12,4 +12,8 @@
 
     <!-- Textos TextViews -->
     <string name="meu_saldo">Meu Saldo</string>
+    <string name="data">Data</string>
+    <string name="horario">Horário</string>
+    <string name="movimentacao">Movimentação</string>
+    <string name="valor">Valor</string>
 </resources>

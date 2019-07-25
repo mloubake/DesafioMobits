@@ -1,9 +1,41 @@
 <?xml version="1.0" encoding="utf-8"?>
-<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context=".activity.TransferenciaActivity">
 
-</android.support.constraint.ConstraintLayout>
+    <TextView
+        android:id="@+id/layoutTransferencia"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="@string/transferencia"
+        android:textSize="16dp"
+        android:background="#B4B4B4"
+        android:paddingTop="8dp"
+        android:paddingLeft="8dp"
+        android:paddingBottom="8dp"/>
+
+    <EditText
+        android:id="@+id/etTransferirPara"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:hint="Conta Corrente do destinatário"
+        android:textStyle="bold|italic"
+        android:layout_below="@+id/layoutTransferencia"/>
+    <EditText
+        android:id="@+id/etValorATransferir"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:hint="Valor à transferir"
+        android:textStyle="bold|italic"
+        android:layout_below="@+id/etTransferirPara"/>
+    <Button
+        android:id="@+id/btnTransferir"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Transferir"
+        android:layout_below="@id/etValorATransferir"/>
+</RelativeLayout>

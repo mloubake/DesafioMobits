@@ -101,8 +101,7 @@ public class FuncionalidadesActivity extends AppCompatActivity {
         btnSolicitarGerente.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent intent = new Intent(FuncionalidadesActivity.this, SolicitarGerenteActivity.class);
-                startActivity(intent);
+                startActivity(new Intent(FuncionalidadesActivity.this, SolicitarGerenteActivity.class));
             }
         });
     }

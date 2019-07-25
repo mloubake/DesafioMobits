@@ -15,5 +15,6 @@
     <string name="valor">Valor</string>
     <string name="extrato">Extrato</string>
     <string name="saque">Saque</string>
+    <string name="depositar">Depositar</string>
 
 </resources>

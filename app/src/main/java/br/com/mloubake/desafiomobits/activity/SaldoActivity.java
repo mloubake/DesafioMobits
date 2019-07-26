@@ -18,6 +18,7 @@ public class SaldoActivity extends AppCompatActivity {
         setContentView(R.layout.activity_saldo);
 
         setandoSaldoId();
+        c = new Conta();
     }
 
     public void setandoSaldoId() {
@@ -32,9 +33,9 @@ public class SaldoActivity extends AppCompatActivity {
     }
 
     public void atualizarSaldo() {
-        c = new Conta();
+//        c = new Conta();
         saldo = c.getSaldo();
-        txtSaldo.setText("R$" + saldo);
+        txtSaldo.setText("R$ " + saldo);
     }
 
 }

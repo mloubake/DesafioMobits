@@ -5,46 +5,70 @@
     android:layout_height="match_parent">
 
     <LinearLayout
-        android:id="@+id/layoutViewholderExtrato"
+        android:id="@+id/layoutSuperior"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="horizontal">
         <TextView
-            android:id="@+id/txtDataExtrato"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:hint="@string/data"
-            android:padding="8dp"
-            android:background="#D3D3D3"
-            android:layout_weight="0.8"/>
-        <TextView
-            android:id="@+id/txtHorarioExtrato"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:hint="@string/horario"
-            android:padding="8dp"
-            android:background="#D3D3D3"
-            android:layout_weight="0.8"/>
-        <TextView
             android:id="@+id/txtMovimentacaoExtrato"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:hint="@string/movimentacao"
             android:padding="8dp"
             android:background="#D3D3D3"
-            android:layout_weight="2"/>
+            android:layout_weight="1"/>
         <TextView
             android:id="@+id/txtValorExtrato"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:hint="@string/valor"
             android:padding="8dp"
             android:background="#D3D3D3"
-            android:layout_weight="0.9"/>
+            android:layout_weight="1"/>
+    </LinearLayout>
+    <LinearLayout
+        android:id="@+id/layoutMeio"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:layout_below="@id/layoutSuperior">
+        <TextView
+            android:id="@+id/txtDataExtrato"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:padding="8dp"
+            android:background="#D3D3D3"
+            android:layout_weight="1"/>
+        <TextView
+            android:id="@+id/txtHorarioExtrato"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:padding="8dp"
+            android:background="#D3D3D3"
+            android:layout_weight="1"/>
+    </LinearLayout>
+    <LinearLayout
+        android:id="@+id/layoutInferior"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:layout_below="@id/layoutMeio">
+        <TextView
+            android:id="@+id/txtTransferencia"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:padding="8dp"
+            android:background="#D3D3D3"
+            android:layout_weight="1"/>
+        <TextView
+            android:id="@+id/txtConta"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:padding="8dp"
+            android:background="#D3D3D3"
+            android:layout_weight="1"/>
     </LinearLayout>
     <View
         android:layout_width="match_parent"
         android:layout_height="2dp"
-        android:layout_below="@id/layoutViewholderExtrato"
+        android:layout_below="@id/layoutInferior"
         android:background="#6F6F6F"/>
 </RelativeLayout>

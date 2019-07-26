@@ -32,8 +32,8 @@ public class MovimentacaoAdapter extends RecyclerView.Adapter<RecyclerView.ViewH
 
     @Override
     public void onBindViewHolder(RecyclerView.ViewHolder myViewHolder, int position) {
-        ((MovimentacaoViewHolder) myViewHolder).txtData.setText((CharSequence) mMovimentacaoList.get(position).getData());
-        ((MovimentacaoViewHolder) myViewHolder).txtHorario.setText((CharSequence) mMovimentacaoList.get(position).getHorario());
+        ((MovimentacaoViewHolder) myViewHolder).txtData.setText(mMovimentacaoList.get(position).getData());
+        ((MovimentacaoViewHolder) myViewHolder).txtHorario.setText(mMovimentacaoList.get(position).getHorario());
         ((MovimentacaoViewHolder) myViewHolder).txtMovimentacao.setText(mMovimentacaoList.get(position).getTipoMovimentacao());
         ((MovimentacaoViewHolder) myViewHolder).txtValor.setText(String.valueOf((int) mMovimentacaoList.get(position).getValor()));
     }
@@ -48,6 +48,8 @@ public class MovimentacaoAdapter extends RecyclerView.Adapter<RecyclerView.ViewH
         TextView txtHorario;
         TextView txtMovimentacao;
         TextView txtValor;
+        TextView txtTransferencia;
+        TextView txtConta;
 
         public MovimentacaoViewHolder(View itemView) {
             super(itemView);
@@ -56,6 +58,8 @@ public class MovimentacaoAdapter extends RecyclerView.Adapter<RecyclerView.ViewH
             txtHorario = itemView.findViewById(R.id.txtHorarioExtrato);
             txtMovimentacao = itemView.findViewById(R.id.txtMovimentacaoExtrato);
             txtValor = itemView.findViewById(R.id.txtValorExtrato);
+            txtTransferencia = itemView.findViewById(R.id.txtTransferencia);
+            txtConta = itemView.findViewById(R.id.txtConta);
         }
     }
 }

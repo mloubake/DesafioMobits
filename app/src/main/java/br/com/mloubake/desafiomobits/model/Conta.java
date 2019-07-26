@@ -2,11 +2,11 @@ package br.com.mloubake.desafiomobits.model;
 
 public class Conta {
 
-    int tipoConta;
+    int contaCorrente;
     float saldo;
 
     public Conta(int tipoConta, float saldo) {
-        this.tipoConta = tipoConta;
+        this.contaCorrente = tipoConta;
         this.saldo = saldo;
     }
 
@@ -18,12 +18,12 @@ public class Conta {
 
     }
 
-    public int getTipoConta() {
-        return tipoConta;
+    public int getContaCorrente() {
+        return contaCorrente;
     }
 
-    public void setTipoConta(int tipoConta) {
-        this.tipoConta = tipoConta;
+    public void setContaCorrente(int contaCorrente) {
+        this.contaCorrente = contaCorrente;
     }
 
     public float getSaldo() {

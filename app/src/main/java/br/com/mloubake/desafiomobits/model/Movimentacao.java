@@ -16,6 +16,14 @@ public class Movimentacao {
         this.valor = valor;
     }
 
+    public Movimentacao(float valor) {
+        this.valor = valor;
+    }
+
+    public Movimentacao() {
+
+    }
+
     public String  getData() {
         return data;
     }

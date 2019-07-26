@@ -9,7 +9,7 @@ import android.widget.Toast;
 
 import br.com.mloubake.desafiomobits.R;
 
-public class FuncionalidadesActivity extends AppCompatActivity {
+public class MenuPrincipalActivity extends AppCompatActivity {
 
     Button btnSaldo;
     Button btnExtrato;
@@ -51,7 +51,7 @@ public class FuncionalidadesActivity extends AppCompatActivity {
         btnSaldo.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent intent = new Intent(FuncionalidadesActivity.this, SaldoActivity.class);
+                Intent intent = new Intent(MenuPrincipalActivity.this, SaldoActivity.class);
                 startActivity(intent);
             }
         });
@@ -61,7 +61,7 @@ public class FuncionalidadesActivity extends AppCompatActivity {
         btnExtrato.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent intent = new Intent(FuncionalidadesActivity.this, ExtratoActivity.class);
+                Intent intent = new Intent(MenuPrincipalActivity.this, ExtratoActivity.class);
                 startActivity(intent);
             }
         });
@@ -71,7 +71,7 @@ public class FuncionalidadesActivity extends AppCompatActivity {
         btnSaque.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent intent = new Intent(FuncionalidadesActivity.this, SaqueActivity.class);
+                Intent intent = new Intent(MenuPrincipalActivity.this, SaqueActivity.class);
                 startActivity(intent);
             }
         });
@@ -81,7 +81,7 @@ public class FuncionalidadesActivity extends AppCompatActivity {
         btnDeposito.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent intent = new Intent(FuncionalidadesActivity.this, DepositoActivity.class);
+                Intent intent = new Intent(MenuPrincipalActivity.this, DepositoActivity.class);
                 startActivity(intent);
             }
         });
@@ -91,7 +91,7 @@ public class FuncionalidadesActivity extends AppCompatActivity {
         btnTransferencia.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent intent = new Intent(FuncionalidadesActivity.this, TransferenciaActivity.class);
+                Intent intent = new Intent(MenuPrincipalActivity.this, TransferenciaActivity.class);
                 startActivity(intent);
             }
         });
@@ -101,7 +101,7 @@ public class FuncionalidadesActivity extends AppCompatActivity {
         btnSolicitarGerente.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                startActivity(new Intent(FuncionalidadesActivity.this, SolicitarGerenteActivity.class));
+                startActivity(new Intent(MenuPrincipalActivity.this, SolicitarGerenteActivity.class));
             }
         });
     }
@@ -110,8 +110,8 @@ public class FuncionalidadesActivity extends AppCompatActivity {
         btnTrocarUsuario.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                FuncionalidadesActivity.this.finish();
-                Toast.makeText(FuncionalidadesActivity.this, "Fazendo Logoff", Toast.LENGTH_SHORT).show();
+                MenuPrincipalActivity.this.finish();
+                Toast.makeText(MenuPrincipalActivity.this, "Fazendo Logoff", Toast.LENGTH_SHORT).show();
             }
         });
 

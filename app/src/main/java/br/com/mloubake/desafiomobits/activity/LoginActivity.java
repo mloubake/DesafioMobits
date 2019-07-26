@@ -9,7 +9,7 @@ import android.widget.EditText;
 
 import br.com.mloubake.desafiomobits.R;
 
-public class MainActivity extends AppCompatActivity {
+public class LoginActivity extends AppCompatActivity {
 
     EditText etContaCorrente;
     EditText etContaSenha;
@@ -36,7 +36,7 @@ public class MainActivity extends AppCompatActivity {
         btnLogin.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent intent = new Intent(MainActivity.this, FuncionalidadesActivity.class);
+                Intent intent = new Intent(LoginActivity.this, MenuPrincipalActivity.class);
                 startActivity(intent);
             }
         });

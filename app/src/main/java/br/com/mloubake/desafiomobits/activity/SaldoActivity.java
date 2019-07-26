@@ -2,23 +2,28 @@ package br.com.mloubake.desafiomobits.activity;
 
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.util.Log;
 import android.widget.TextView;
 
 import br.com.mloubake.desafiomobits.R;
 import br.com.mloubake.desafiomobits.model.Conta;
+import br.com.mloubake.desafiomobits.model.Movimentacao;
 
 public class SaldoActivity extends AppCompatActivity {
 
     TextView txtSaldo;
-    Conta c;
+    Conta c = new Conta();
+    Movimentacao m = new Movimentacao();
     float saldo;
+    float move;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_saldo);
 
         setandoSaldoId();
-        c = new Conta();
+        atualizarSaldo();
     }
 
     public void setandoSaldoId() {
@@ -29,13 +34,15 @@ public class SaldoActivity extends AppCompatActivity {
     @Override
     protected void onResume() {
         super.onResume();
-        atualizarSaldo();
+
+//        atualizarSaldo();
     }
 
     public void atualizarSaldo() {
-//        c = new Conta();
-        saldo = c.getSaldo();
-        txtSaldo.setText("R$ " + saldo);
+        move = m.getValor();
+        txtSaldo.setText("R$ " + move);
+        Log.d("", "atualizarSaldo: "+ move);
+        c.setSaldo(move);
     }
 
 }

@@ -4,25 +4,25 @@ import android.content.Context;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
 
-public class CriarBancoDados extends SQLiteOpenHelper {
+public class BancoDados extends SQLiteOpenHelper {
 
     private static final String NOME_BANCO = "bd.desafio";
     private static final int VERSAO_BD = 1;
-    private static final String TABELA_USUARIO = "usuario";
+    protected static final String TABELA_USUARIO = "usuario";
     private static final String TABELA_CONTA = "conta";
     private static final String TABELA_MOVIMENTACAO = "movimentacao";
     private static final String KEY_ID = "_id";
-    private static final String KEY_CONTA_CORRENTE = "contaCorrente";
-    private static final String KEY_CONTA_SENHA = "contaSenha";
-    private static final String KEY_TIPO_CONTA = "tipoConta";
+    protected static final String KEY_CONTA_CORRENTE = "contaCorrente";
+    protected static final String KEY_CONTA_SENHA = "contaSenha";
+    protected static final String KEY_TIPO_CONTA = "tipoConta";
     private static final String KEY_SALDO = "saldo";
     private static final String KEY_DATA = "data";
     private static final String KEY_HORARIO = "horario";
     private static final String KEY_TIPO_MOVIMENTACAO = "tipoMovimentacao";
     private static final String KEY_VALOR = "valor";
 
-    public CriarBancoDados(Context context) {
-        super(context, NOME_BANCO,null,VERSAO_BD);
+    public BancoDados(Context context) {
+        super(context, NOME_BANCO,null, VERSAO_BD);
     }
 
     @Override

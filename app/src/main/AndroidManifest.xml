@@ -26,10 +26,10 @@
             android:name=".activity.ExtratoActivity"
             android:screenOrientation="portrait" />
         <activity
-            android:name=".activity.FuncionalidadesActivity"
+            android:name=".activity.MenuPrincipalActivity"
             android:screenOrientation="portrait" />
         <activity
-            android:name=".activity.MainActivity"
+            android:name=".activity.LoginActivity"
             android:screenOrientation="portrait">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />

@@ -22,6 +22,8 @@ public class LoginActivity extends AppCompatActivity {
 
         setarIds();
         botaoLogin();
+
+        
     }
 
     //Seta as id em cada view
@@ -36,9 +38,14 @@ public class LoginActivity extends AppCompatActivity {
         btnLogin.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent intent = new Intent(LoginActivity.this, MenuPrincipalActivity.class);
-                startActivity(intent);
+                verificarUsuario();
             }
         });
+    }
+
+    public void verificarUsuario() {
+
+        Intent intent = new Intent(LoginActivity.this, MenuPrincipalActivity.class);
+        startActivity(intent);
     }
 }

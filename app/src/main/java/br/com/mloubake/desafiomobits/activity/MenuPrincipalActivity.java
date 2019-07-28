@@ -97,6 +97,7 @@ public class MenuPrincipalActivity extends AppCompatActivity {
         });
     }
     //Iniciar Activity SolicitarGerente
+    //todo ver o estado de visibilidade GONE
     private void iniciarSolicitarGerente() {
         btnSolicitarGerente.setOnClickListener(new View.OnClickListener() {
             @Override

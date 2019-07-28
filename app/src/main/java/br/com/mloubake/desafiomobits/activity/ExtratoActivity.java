@@ -37,7 +37,7 @@ public class ExtratoActivity extends AppCompatActivity {
 
         Movimentacao movimentacao = new Movimentacao("11111",
                 "222222",
-                "Depósito", 6000);
+                "Depósito", 6000, 12345, 54321);
 
         mMovimentacaoLista.add(movimentacao);
 

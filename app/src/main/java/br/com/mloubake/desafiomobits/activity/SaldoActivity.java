@@ -2,20 +2,16 @@ package br.com.mloubake.desafiomobits.activity;
 
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
-import android.util.Log;
 import android.widget.TextView;
 
 import br.com.mloubake.desafiomobits.R;
+import br.com.mloubake.desafiomobits.database.BancoDados;
 import br.com.mloubake.desafiomobits.model.Conta;
-import br.com.mloubake.desafiomobits.model.Movimentacao;
 
 public class SaldoActivity extends AppCompatActivity {
 
     TextView txtSaldo;
-    Conta c = new Conta();
-    Movimentacao m = new Movimentacao();
-    float saldo;
-    float move;
+    BancoDados banco;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -23,26 +19,24 @@ public class SaldoActivity extends AppCompatActivity {
         setContentView(R.layout.activity_saldo);
 
         setandoSaldoId();
-        atualizarSaldo();
+
+        banco = new BancoDados(this);
     }
 
     public void setandoSaldoId() {
         txtSaldo = findViewById(R.id.txtSaldo);
     }
 
-
     @Override
-    protected void onResume() {
+    public void onResume() {
         super.onResume();
-
-//        atualizarSaldo();
+        atualizarSaldo();
     }
 
     public void atualizarSaldo() {
-        move = m.getValor();
-        txtSaldo.setText("R$ " + move);
-        Log.d("", "atualizarSaldo: "+ move);
-        c.setSaldo(move);
+        String resultadoSaldo = String.valueOf(banco.recuperarSaldoUsuario());
+        txtSaldo.setText("R$ " + resultadoSaldo);
     }
 
+    //Todo fazer comparação da conta no BD com conta passada pelo bundle
 }

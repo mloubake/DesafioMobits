@@ -2,20 +2,33 @@ package br.com.mloubake.desafiomobits.model;
 
 public class Usuario {
 
-    Conta contaCorrente;
+    int usuarioId;
+    int contaCorrente;
+//    Conta numeroConta;
     int contaSenha;
     int tipoCliente;
 
-    public Usuario(Conta contaCorrente, int contaSenha, int tipoCliente) {
+    public Usuario(int usuarioId, int contaCorrente, int contaSenha, int tipoCliente) {
+        this.usuarioId = usuarioId;
         this.contaCorrente = contaCorrente;
         this.contaSenha = contaSenha;
         this.tipoCliente = tipoCliente;
     }
 
-    public Conta getContaCorrente(){
+    public Usuario() {
+    }
+
+    public int getUsuarioId(){
+        return usuarioId;
+    }
+    public void setUsuarioId(int usuarioId) {
+        this.usuarioId = usuarioId;
+    }
+
+    public int getContaCorrente(){
         return contaCorrente;
     }
-    public void setContaCorrente(Conta contaCorrente) {
+    public void setContaCorrente(int contaCorrente) {
         this.contaCorrente = contaCorrente;
     }
 

@@ -31,10 +31,10 @@ public class MovimentacaoAdapter extends RecyclerView.Adapter<RecyclerView.ViewH
 
     @Override
     public void onBindViewHolder(RecyclerView.ViewHolder myViewHolder, int position) {
-        ((MovimentacaoViewHolder) myViewHolder).txtData.setText(mMovimentacaoList.get(position).getData());
-        ((MovimentacaoViewHolder) myViewHolder).txtHorario.setText(mMovimentacaoList.get(position).getHorario());
-        ((MovimentacaoViewHolder) myViewHolder).txtMovimentacao.setText(mMovimentacaoList.get(position).getTipoMov());
-        ((MovimentacaoViewHolder) myViewHolder).txtValor.setText(String.valueOf((int) mMovimentacaoList.get(position).getValor()));
+//        ((MovimentacaoViewHolder) myViewHolder).txtData.setText(mMovimentacaoList.get(position).getData());
+//        ((MovimentacaoViewHolder) myViewHolder).txtHorario.setText(mMovimentacaoList.get(position).getHorario());
+//        ((MovimentacaoViewHolder) myViewHolder).txtMovimentacao.setText(mMovimentacaoList.get(position).getTipoMov());
+//        ((MovimentacaoViewHolder) myViewHolder).txtValor.setText(String.valueOf((int) mMovimentacaoList.get(position).getValor()));
     }
 
     @Override

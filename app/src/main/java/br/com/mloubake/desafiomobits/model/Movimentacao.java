@@ -1,55 +1,43 @@
 package br.com.mloubake.desafiomobits.model;
 
+import java.sql.Time;
+import java.time.LocalDate;
+import java.time.LocalTime;
+import java.util.Date;
+
 public class Movimentacao {
 
-    int movimentacaoId;
-    String data;
-    String horario;
-    String tipoMov;
+    LocalDate data;
+    LocalTime horario;
+    float valor;
     int contaOrigem;
     int contaDestino;
-    float valor;
+    String tipoMov;
 
-    public Movimentacao(int movimentacaoId, String data, String horario, String tipoMov, int contaOrigem, int contaDestino, float valor) {
-        this.movimentacaoId = movimentacaoId;
+    public Movimentacao(LocalDate data, LocalTime horario, float valor,
+                        int contaOrigem, int contaDestino, String tipoMov) {
         this.data = data;
         this.horario = horario;
-        this.tipoMov = tipoMov;
+        this.valor = valor;
         this.contaOrigem = contaOrigem;
         this.contaDestino = contaDestino;
-        this.valor = valor;
-    }
-
-    public Movimentacao(String data, String horario, String tipoMov, int contaOrigem, int contaDestino, float valor) {
-        this.data = data;
-        this.horario = horario;
         this.tipoMov = tipoMov;
-        this.contaOrigem = contaOrigem;
-        this.contaDestino = contaDestino;
-        this.valor = valor;
     }
 
     public Movimentacao() {
-
-    }
-    public int getMovimentacaoId() {
-        return movimentacaoId;
-    }
-    public void setMovimentacaoId(int movimentacaoId) {
-        this.movimentacaoId = movimentacaoId;
     }
 
-    public String  getData() {
+    public LocalDate getData() {
         return data;
     }
-    public void setData(String data) {
+    public void setData(LocalDate data) {
         this.data = data;
     }
 
-    public String getHorario() {
+    public LocalTime getHorario() {
         return horario;
     }
-    public void setHorario(String horario) {
+    public void setHorario(LocalTime horario) {
         this.horario = horario;
     }
 

@@ -1,20 +1,26 @@
 package br.com.mloubake.desafiomobits.activity;
 
+import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.text.TextUtils;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
-
 import java.time.LocalDate;
 import java.time.LocalTime;
-
 import br.com.mloubake.desafiomobits.R;
 import br.com.mloubake.desafiomobits.database.BDFuncoes;
+import br.com.mloubake.desafiomobits.model.Movimentacao;
 
 public class DepositoActivity extends AppCompatActivity {
+    private static final String TAG = "";
+
+    //todo usar substituir os toasts por alertdialog (fazer por último)
+    //todo ver casa decimal formatada para 2 dígitos
+    //todo tirar hard coded
 
     //Atributos das Views
     EditText etDeposito;
@@ -26,6 +32,9 @@ public class DepositoActivity extends AppCompatActivity {
     BDFuncoes bd;
 
     float valorDepositado;
+    int conta;
+    float saldo;
+    float soma;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -33,6 +42,7 @@ public class DepositoActivity extends AppCompatActivity {
         setContentView(R.layout.activity_deposito);
 
         setupDepositoId();
+        getBundleMenu();
 
         bd = new BDFuncoes(getBaseContext());
     }
@@ -40,6 +50,13 @@ public class DepositoActivity extends AppCompatActivity {
     private void setupDepositoId() {
         etDeposito = findViewById(R.id.etDeposito);
         btnDepositar = findViewById(R.id.btnDepositar);
+    }
+
+    private void getBundleMenu() {
+        Intent intent = getIntent();
+        if(intent != null) {
+            conta = getIntent().getExtras().getInt("conta");
+        }
     }
 
     @Override
@@ -58,24 +75,19 @@ public class DepositoActivity extends AppCompatActivity {
     }
 
     public void depositarSaldo() {
-//            pegarDataHora(); usar depois
+        pegarDataHora();
 
         valorDepositado = 0f;
         if(!TextUtils.isEmpty(etDeposito.getText())) {
             valorDepositado = Float.parseFloat(etDeposito.getText().toString());
         }
 
-//        bd.testeSaldo(new Conta(12345, valorDepositado));
+        saldo = bd.getSaldo(conta).getSaldo();
+        soma = saldo + valorDepositado;
+        bd.depositar(conta, soma);
 
-        float saldo = bd.recuperarSaldoUsuario();
-        float soma = saldo + valorDepositado;
-
-        bd.testeUpdateSaldo(12345,soma);
-
-        //todo usar substituir os toasts por alertdialog (fazer por último)
-        //todo ver casa decimal formatada para 2 dígitos
-
-        //todo tirar hard coded
+        bd.criarMovimentacao(new Movimentacao(data, horario, valorDepositado,
+                conta, conta, "Depósito"));
 
         validarValor();
     }
@@ -94,12 +106,7 @@ public class DepositoActivity extends AppCompatActivity {
         if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.O) {
             data = LocalDate.now();
             horario = LocalTime.now();
+            Log.d(TAG, "DATA/HORA: " + data + " / " + horario);
         }
-    }
-
-    @Override
-    protected void onPause() {
-        super.onPause();
-
     }
 }

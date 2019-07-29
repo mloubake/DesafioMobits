@@ -22,6 +22,10 @@ public class MenuPrincipalActivity extends AppCompatActivity {
     Button btnSolicitarGerente;
     Button btnTrocarUsuario;
 
+    int conta;
+    int senha;
+    String tipo;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -43,13 +47,10 @@ public class MenuPrincipalActivity extends AppCompatActivity {
     private void recuperandoBundleLogin() {
         Intent intent = getIntent();
         if(intent != null) {
-            int conta = getIntent().getExtras().getInt("conta");
-            int senha = getIntent().getExtras().getInt("senha");
-            String tipo = getIntent().getExtras().getString("tipo");
+            conta = getIntent().getExtras().getInt("conta");
+            senha = getIntent().getExtras().getInt("senha");
+            tipo = getIntent().getExtras().getString("tipo");
             Log.d(TAG, "conta/senha/tipo" + conta + " / " + senha + " / " + tipo);
-        Toast.makeText(this, "AAA" + conta, Toast.LENGTH_SHORT).show();
-        Toast.makeText(this, "BBB" + senha, Toast.LENGTH_SHORT).show();
-        Toast.makeText(this, "CCC" + tipo, Toast.LENGTH_SHORT).show();
         }
     }
 
@@ -70,6 +71,9 @@ public class MenuPrincipalActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 Intent intent = new Intent(MenuPrincipalActivity.this, SaldoActivity.class);
+                Bundle bundle = new Bundle();
+                bundle.putInt("conta", conta);
+                intent.putExtras(bundle);
                 startActivity(intent);
             }
         });
@@ -100,6 +104,9 @@ public class MenuPrincipalActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 Intent intent = new Intent(MenuPrincipalActivity.this, DepositoActivity.class);
+                Bundle bundle = new Bundle();
+                bundle.putInt("conta", conta);
+                intent.putExtras(bundle);
                 startActivity(intent);
             }
         });

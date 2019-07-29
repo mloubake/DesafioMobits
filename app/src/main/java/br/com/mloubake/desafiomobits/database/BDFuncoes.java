@@ -6,12 +6,19 @@ import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.util.Log;
 
+import java.time.LocalDate;
+import java.time.LocalTime;
+import java.util.Date;
+
 import br.com.mloubake.desafiomobits.model.Conta;
+import br.com.mloubake.desafiomobits.model.Movimentacao;
 import br.com.mloubake.desafiomobits.model.Usuario;
 
 import static android.content.ContentValues.TAG;
 
 public class BDFuncoes {
+    //TODO fazer lista de tarefas do que falta
+
     private SQLiteDatabase db;
     private BancoDados bancoDados;
 
@@ -29,7 +36,6 @@ public class BDFuncoes {
         valores.put(bancoDados.KEY_USUARIO_CONTA, usuario.getConta());
         valores.put(bancoDados.KEY_USUARIO_SENHA, usuario.getSenha());
         valores.put(bancoDados.KEY_USUARIO_TIPO, usuario.getTipo());
-
         db.insert(bancoDados.TABELA_USUARIO,
                 null,
                 valores);
@@ -38,31 +44,16 @@ public class BDFuncoes {
     //Popular Tabela Conta (Executar somente 1 vez)
     public void popularConta(Conta conta) {
         db = bancoDados.getWritableDatabase();
-        valores.put(bancoDados.KEY_CONTA_CORRENTE, conta.getNumero());
-        valores.put(bancoDados.KEY_CONTA_SALDO, conta.getSaldo());
-        db.insert(bancoDados.TABELA_CONTA,
-                null,
-                valores);
-        db.close();
-    }
-
-    public void testeSaldo(Conta conta) {
-        //Pega a referência para escrever no bancoDados
-        db = bancoDados.getWritableDatabase();
-        //Instância ContentValues para adicionar chave Coluna/Valor
         valores = new ContentValues();
-        //Inserece as infos de Coluna/Valor
-        valores.put(bancoDados.KEY_CONTA_CORRENTE, conta.getNumero());
+        valores.put(bancoDados.KEY_CONTA_NUMERO, conta.getNumero());
         valores.put(bancoDados.KEY_CONTA_SALDO, conta.getSaldo());
-        //Executa a alteração
         db.insert(bancoDados.TABELA_CONTA,
                 null,
                 valores);
-        //Fecha o bancoDados após operação
         db.close();
     }
 
-    public Usuario pegarUsuarioConta(int conta) {
+    public Usuario login(int conta) {
         db = bancoDados.getReadableDatabase();
         Cursor cursor = db.query(bancoDados.TABELA_USUARIO,
                 new String[] {bancoDados.KEY_USUARIO_CONTA,
@@ -80,7 +71,6 @@ public class BDFuncoes {
                 usuario.setConta(cursor.getInt(cursor.getColumnIndex(bancoDados.KEY_USUARIO_CONTA)));
                 usuario.setSenha(cursor.getInt(cursor.getColumnIndex(bancoDados.KEY_USUARIO_SENHA)));
                 usuario.setTipo(cursor.getString(cursor.getColumnIndex(bancoDados.KEY_USUARIO_TIPO)));
-                Log.d(TAG, "pegarUsuario: Conta/senha/tipo: " + usuario.getConta() + " / " + usuario.getSenha() + " / " + usuario.getTipo());
                 if((usuario.getConta() == conta)) {
                     break;
                 }
@@ -93,76 +83,85 @@ public class BDFuncoes {
         return usuario;
     }
 
-    //Saldo
-    public Float recuperarSaldoUsuario(/*numero da conta*/) {
-        //Pega a referência para a leitura do DB
+    public Conta getSaldo(int contaNumero) {
         db = bancoDados.getReadableDatabase();
+        String query = "SELECT saldo FROM conta WHERE conta = " + contaNumero;
 
-        //Executando a query
-        Cursor cursor = db.query(bancoDados.TABELA_CONTA,
-                new String[]{bancoDados.KEY_CONTA_SALDO},
-                null /*where com o num conta*/,
-                null,
-                null,
-                null,
-                null,
-                null);
-        //Se achar resultados, move para o primeiro item
-        if(cursor != null) {
-            cursor.moveToFirst();
+        Cursor cursor = db.rawQuery(query, null);
+        Conta conta = new Conta();
+        if(cursor != null && cursor.moveToFirst()) {
+            do {
+                conta.setSaldo(cursor.getFloat(cursor.getColumnIndex(bancoDados.KEY_CONTA_SALDO)));
+                Log.d(TAG, "getSaldo: " + conta.getNumero() + " / " + conta.getSaldo());
+                if((conta.getNumero() == contaNumero)) {
+                    break;
+                }
+            }
+            while(cursor.moveToNext());
         }
-        float saldo = cursor.getFloat(cursor.getColumnIndex(bancoDados.KEY_CONTA_SALDO));
-
+        cursor.close();
         db.close();
 
-        return saldo;
+        return conta;
     }
 
-
-    //Activity Extrato
-
-    //Activity Saque
-
-    //Activity Depósito
-    public void depositarValor(Conta conta) {
-        valores = new ContentValues();
-        valores.put(BancoDados.KEY_CONTA_SALDO,conta.getSaldo());
-
-//        db.update(bancoDados.TABELA_CONTA,
-//                valores,
-//                ,
-//                new String[]{"" + conta.getSaldo()});
-    }
-
-//    public void testeSaldo(float saldo) {
-//        db = bancoDados.getWritableDatabase();
-//        valores = new ContentValues();
-//        valores.put(bancoDados.KEY_CONTA_SALDO, saldo);
-////        db.insert(bancoDados.TABELA_CONTA, null, valores);
-//        db.update(bancoDados.TABELA_CONTA, valores, null, null);
-//        db.close();
-//    }
-
-    //TODO fazer lista de tarefas do que falta
-
-
-
-    public float testeUpdateSaldo(int conta, float valor) {
+    public void depositar(int conta, float valor) {
         db = bancoDados.getWritableDatabase();
         valores = new ContentValues();
         valores.put(bancoDados.KEY_CONTA_SALDO, valor);
 
-        float saldo = db.update(bancoDados.TABELA_CONTA,
+        db.update(bancoDados.TABELA_CONTA,
                 valores,
-                bancoDados.KEY_CONTA_SALDO + "= ?",
+                bancoDados.KEY_CONTA_NUMERO + "= ?",
                 new String[]{String.valueOf(conta)});
-
-        return saldo;
+        db.close();
     }
 
-    //Activity Transferência
+    public void sacar(int conta, float valor) {
+        bancoDados.getWritableDatabase();
+        valores = new ContentValues();
+        valores.put(bancoDados.KEY_CONTA_SALDO, valor);
 
-    //Activity VisitaGerente
+        db.update(bancoDados.TABELA_CONTA,
+                valores,
+                bancoDados.KEY_CONTA_SALDO + "= ?",
+                new String[] {String.valueOf(conta)});
+        db.close();
+    }
+
+    public void criarMovimentacao(Movimentacao movimentacao) {
+        db = bancoDados.getWritableDatabase();
+
+        valores = new ContentValues();
+        valores.put(bancoDados.KEY_MOV_DATA, String.valueOf(movimentacao.getData()));
+        valores.put(bancoDados.KEY_MOV_HORARIO, String.valueOf(movimentacao.getHorario()));
+        valores.put(bancoDados.KEY_MOV_VALOR, movimentacao.getValor());
+        valores.put(bancoDados.KEY_MOV_CONTA_ORIGEM, movimentacao.getContaOrigem());
+        valores.put(bancoDados.KEY_MOV_CONTA_DESTINO, movimentacao.getContaDestino());
+        valores.put(bancoDados.KEY_MOV_TIPO, movimentacao.getTipoMov());
+
+        db.insert(bancoDados.TABELA_MOVIMENTACAO,
+                null,
+                valores);
+        db.close();
+    }
+
+
+    public void testeSaldo(Conta conta) {
+        //Pega a referência para escrever no bancoDados
+        db = bancoDados.getWritableDatabase();
+        //Instância ContentValues para adicionar chave Coluna/Valor
+        valores = new ContentValues();
+        //Inserece as infos de Coluna/Valor
+        valores.put(bancoDados.KEY_CONTA_NUMERO, conta.getNumero());
+        valores.put(bancoDados.KEY_CONTA_SALDO, conta.getSaldo());
+        //Executa a alteração
+        db.insert(bancoDados.TABELA_CONTA,
+                null,
+                valores);
+        //Fecha o bancoDados após operação
+        db.close();
+    }
 
 }
 

@@ -6,12 +6,12 @@ import android.database.sqlite.SQLiteOpenHelper;
 import android.util.Log;
 
 public class BancoDados extends SQLiteOpenHelper {
-
     //todo NA VERSÃO FINAL, TIRAR TODOS OS COMENTÁRIOS E TODOs QUE NÃO AJUDAM EM NADA DE TODAS AS TELAS
 
+    private static final String TAG = "";
     //BD Nome e Versão
     private static final String NOME_BD = "bd.desafio";
-    private static final int VERSAO_BD = 2;
+    private static final int VERSAO_BD = 3;
     //Tabelas
     protected static final String TABELA_USUARIO = "usuario";
     protected static final String TABELA_CONTA = "conta";
@@ -23,7 +23,7 @@ public class BancoDados extends SQLiteOpenHelper {
     protected static final String KEY_USUARIO_TIPO = "tipo";
     //Conta
     protected static final String KEY_CONTA_ID = "_contaId";
-    protected static final String KEY_CONTA_CORRENTE = "conta";
+    protected static final String KEY_CONTA_NUMERO = "conta";
     protected static final String KEY_CONTA_SALDO = "saldo";
     //Movimentação
     protected static final String KEY_MOV_ID = "_id";
@@ -41,15 +41,8 @@ public class BancoDados extends SQLiteOpenHelper {
     //Cria Tabelas
     @Override
     public void onCreate(SQLiteDatabase bd) {
-        //Exemplo sql na mão
-//        bd.execSQL("create table  usuario " +
-//                "(_id integer primary key autoincrement, " +
-//                "nome text not null, " +
-//                "email text not null, " +
-//                "senha text not null);");
-
         //Tabela Usuario
-        String sqlUsuario = "CREATE TABLE " + TABELA_USUARIO + " ("
+        String tabelaUsuario = "CREATE TABLE " + TABELA_USUARIO + " ("
                 + KEY_USUARIO_ID + " integer primary key autoincrement,"
                 + KEY_USUARIO_CONTA + " integer,"
                 + KEY_USUARIO_SENHA + " integer,"
@@ -57,27 +50,26 @@ public class BancoDados extends SQLiteOpenHelper {
                 + ")";
 
         //Tabela Conta
-        String sqlConta = "CREATE TABLE " + TABELA_CONTA + " ("
+        String tabelaConta = "CREATE TABLE " + TABELA_CONTA + " ("
                 + KEY_CONTA_ID + " integer primary key autoincrement,"
-                + KEY_CONTA_CORRENTE + " integer,"
-                + KEY_CONTA_SALDO + " integer"
+                + KEY_CONTA_NUMERO + " integer,"
+                + KEY_CONTA_SALDO + " float"
                 + ")";
 
         //Tabela Movimentação
-        String sqlMovimentacao = "CREATE TABLE " + TABELA_MOVIMENTACAO + " ("
+        String tabelaMovimentacao = "CREATE TABLE " + TABELA_MOVIMENTACAO + " ("
                 + KEY_MOV_ID + " integer primary key autoincrement,"
                 + KEY_MOV_DATA + " string,"
                 + KEY_MOV_HORARIO + " string,"
+                + KEY_MOV_VALOR + " float,"
                 + KEY_MOV_CONTA_ORIGEM + " integer,"
                 + KEY_MOV_CONTA_DESTINO + " integer,"
-                + KEY_MOV_TIPO + " string,"
-                + KEY_MOV_VALOR + " float"
+                + KEY_MOV_TIPO + " string"
                 + ")";
 
-        //Cria as tabelas no BD
-        bd.execSQL(sqlUsuario);
-        bd.execSQL(sqlConta);
-        bd.execSQL(sqlMovimentacao);
+        bd.execSQL(tabelaUsuario);
+        bd.execSQL(tabelaConta);
+        bd.execSQL(tabelaMovimentacao);
     }
 
     //Atualiza BD
@@ -89,6 +81,6 @@ public class BancoDados extends SQLiteOpenHelper {
         bd.execSQL("DROP TABLE IF EXISTS '" + TABELA_MOVIMENTACAO + "'");
         //Cria BD com nova versão
         onCreate(bd);
-        Log.d("", "novaVersão: " + bd.getVersion());
+        Log.d(TAG, "novaVersão: " + bd.getVersion());
     }
 }

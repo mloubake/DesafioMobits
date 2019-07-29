@@ -65,7 +65,7 @@ public class LoginActivity extends AppCompatActivity {
             senha = Integer.parseInt(etContaSenha.getText().toString());
         }
 
-        Usuario usuario = bd.pegarUsuarioConta(conta);
+        Usuario usuario = bd.login(conta);
         int usuarioConta = usuario.getConta();
         int usuarioSenha = usuario.getSenha();
         String usuarioTipo = usuario.getTipo();
@@ -101,9 +101,9 @@ public class LoginActivity extends AppCompatActivity {
 
         bd.popularConta(new Conta(11111,12345.56f));
         bd.popularConta(new Conta(22222, 987.65f));
-        bd.popularConta(new Conta(33333, 500));
+        bd.popularConta(new Conta(33333, 0));
         bd.popularConta(new Conta(44444, -999999.99f));
-        bd.popularConta(new Conta(55555, 0));
+        bd.popularConta(new Conta(55555, 500));
     }
 
 

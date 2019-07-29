@@ -6,6 +6,9 @@ public class Conta {
     float saldo;
     Movimentacao movimentacao;
 
+    public Conta() {
+    }
+
     public Conta(int numero, float saldo) {
         this.numero = numero;
         this.saldo = saldo;

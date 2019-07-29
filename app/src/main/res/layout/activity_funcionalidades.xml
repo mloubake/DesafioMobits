@@ -70,6 +70,7 @@
         android:textColor="#FFFFFF"
         android:background="#3F51B5"/>
     <View
+        android:id="@+id/viewGerente"
         android:layout_width="match_parent"
         android:layout_height="2dp"
         android:background="#525252"/>

@@ -22,11 +22,9 @@ public class DepositoActivity extends AppCompatActivity {
     //todo ver casa decimal formatada para 2 dígitos
     //todo tirar hard coded
 
-    //Atributos das Views
     EditText etDeposito;
     Button btnDepositar;
 
-    //Atributos da Data e Hora
     LocalDate data;
     LocalTime horario;
     BDFuncoes bd;
@@ -34,20 +32,20 @@ public class DepositoActivity extends AppCompatActivity {
     float valorDepositado;
     int conta;
     float saldo;
-    float soma;
+    float addSaldo;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_deposito);
 
-        setupDepositoId();
+        setupIds();
         getBundleMenu();
 
         bd = new BDFuncoes(getBaseContext());
     }
 
-    private void setupDepositoId() {
+    private void setupIds() {
         etDeposito = findViewById(R.id.etDeposito);
         btnDepositar = findViewById(R.id.btnDepositar);
     }
@@ -75,17 +73,16 @@ public class DepositoActivity extends AppCompatActivity {
     }
 
     public void depositarSaldo() {
-        pegarDataHora();
-
         valorDepositado = 0f;
         if(!TextUtils.isEmpty(etDeposito.getText())) {
             valorDepositado = Float.parseFloat(etDeposito.getText().toString());
         }
 
         saldo = bd.getSaldo(conta).getSaldo();
-        soma = saldo + valorDepositado;
-        bd.depositar(conta, soma);
+        addSaldo = saldo + valorDepositado;
+        bd.conceder(conta, addSaldo);
 
+        pegarDataHora();
         bd.criarMovimentacao(new Movimentacao(data, horario, valorDepositado,
                 conta, conta, "Depósito"));
 

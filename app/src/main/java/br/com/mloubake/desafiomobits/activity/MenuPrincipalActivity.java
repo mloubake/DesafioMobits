@@ -31,7 +31,7 @@ public class MenuPrincipalActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_funcionalidades);
 
-        setarIdsBotoes();
+        setarIds();
 
         iniciarSaldo();
         iniciarExtrato();
@@ -42,6 +42,8 @@ public class MenuPrincipalActivity extends AppCompatActivity {
         iniciarTrocarUsuario();
 
         recuperandoBundleLogin();
+
+
     }
 
     private void recuperandoBundleLogin() {
@@ -50,12 +52,20 @@ public class MenuPrincipalActivity extends AppCompatActivity {
             conta = getIntent().getExtras().getInt("conta");
             senha = getIntent().getExtras().getInt("senha");
             tipo = getIntent().getExtras().getString("tipo");
-            Log.d(TAG, "conta/senha/tipo" + conta + " / " + senha + " / " + tipo);
+            Log.d(TAG, "conta/senha/tipo: " + conta + " / " + senha + " / " + tipo);
+
+            verificarTipoUsuario();
+        }
+    }
+
+    private void verificarTipoUsuario() {
+        if(tipo.matches("Normal")) {
+            btnSolicitarGerente.setVisibility(View.GONE);
         }
     }
 
     //Seta as ids de cada botão
-    private void setarIdsBotoes() {
+    private void setarIds() {
         btnSaldo = findViewById(R.id.btnSaldo);
         btnExtrato = findViewById(R.id.btnExtrato);
         btnSaque = findViewById(R.id.btnSaque);
@@ -94,6 +104,10 @@ public class MenuPrincipalActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 Intent intent = new Intent(MenuPrincipalActivity.this, SaqueActivity.class);
+                Bundle bundle = new Bundle();
+                bundle.putInt("conta", conta);
+                bundle.putString("tipo", tipo);
+                intent.putExtras(bundle);
                 startActivity(intent);
             }
         });
@@ -117,6 +131,9 @@ public class MenuPrincipalActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 Intent intent = new Intent(MenuPrincipalActivity.this, TransferenciaActivity.class);
+                Bundle bundle = new Bundle();
+                bundle.putInt("conta", conta);
+                intent.putExtras(bundle);
                 startActivity(intent);
             }
         });

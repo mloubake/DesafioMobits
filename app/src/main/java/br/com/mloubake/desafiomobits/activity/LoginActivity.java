@@ -27,9 +27,9 @@ public class LoginActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_main);
+        setContentView(R.layout.activity_login);
 
-        setupLoginIds();
+        setupIds();
         botaoLogin();
 
         bd = new BDFuncoes(getBaseContext());
@@ -42,7 +42,7 @@ public class LoginActivity extends AppCompatActivity {
 //        popularBD();
     }
 
-    private void setupLoginIds() {
+    private void setupIds() {
         etContaCorrente = findViewById(R.id.etContaCorrente);
         etContaSenha = findViewById(R.id.etContaSenha);
         btnLogin = findViewById(R.id.btnLogin);
@@ -86,17 +86,17 @@ public class LoginActivity extends AppCompatActivity {
             bundle.putString("tipo", usuarioTipo);
             intent.putExtras(bundle);
             startActivity(intent);
-            Toast.makeText(this, "Realizando Login", Toast.LENGTH_SHORT).show();
+            Toast.makeText(this, "Login Realizado", Toast.LENGTH_SHORT).show();
         } else {
             Toast.makeText(this, "Usuário Inválido", Toast.LENGTH_SHORT).show();
         }
     }
 
     private void popularBD() {
-        bd.popularUsuario(new Usuario(11111, 9999,"Comum"));
+        bd.popularUsuario(new Usuario(11111, 9999,"Normal"));
         bd.popularUsuario(new Usuario(22222, 8888,"VIP"));
-        bd.popularUsuario(new Usuario(33333, 7777,"Comum"));
-        bd.popularUsuario(new Usuario(44444, 6666,"Comum"));
+        bd.popularUsuario(new Usuario(33333, 7777,"Normal"));
+        bd.popularUsuario(new Usuario(44444, 6666,"Normal"));
         bd.popularUsuario(new Usuario(55555, 5555,"VIP"));
 
         bd.popularConta(new Conta(11111,12345.56f));

@@ -29,7 +29,7 @@
         android:layout_height="wrap_content"
         android:hint="Valor à ser retirado"
         android:textStyle="bold|italic"
-        android:inputType="number"/>
+        android:inputType="numberDecimal"/>
     <Button
         android:id="@+id/btnSacar"
         android:layout_width="wrap_content"

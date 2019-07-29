@@ -6,10 +6,6 @@ import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.util.Log;
 
-import java.time.LocalDate;
-import java.time.LocalTime;
-import java.util.Date;
-
 import br.com.mloubake.desafiomobits.model.Conta;
 import br.com.mloubake.desafiomobits.model.Movimentacao;
 import br.com.mloubake.desafiomobits.model.Usuario;
@@ -105,7 +101,7 @@ public class BDFuncoes {
         return conta;
     }
 
-    public void depositar(int conta, float valor) {
+    public void conceder(int conta, float valor) {
         db = bancoDados.getWritableDatabase();
         valores = new ContentValues();
         valores.put(bancoDados.KEY_CONTA_SALDO, valor);
@@ -117,16 +113,21 @@ public class BDFuncoes {
         db.close();
     }
 
-    public void sacar(int conta, float valor) {
-        bancoDados.getWritableDatabase();
+    public void retirar(int conta, float valor) {
+        db = bancoDados.getWritableDatabase();
         valores = new ContentValues();
         valores.put(bancoDados.KEY_CONTA_SALDO, valor);
 
         db.update(bancoDados.TABELA_CONTA,
                 valores,
-                bancoDados.KEY_CONTA_SALDO + "= ?",
+                bancoDados.KEY_CONTA_NUMERO + "= ?",
                 new String[] {String.valueOf(conta)});
         db.close();
+    }
+
+    public void transferencia(int contaOrigem, int contaDestino, float subSaldo, float addSaldo) {
+        retirar(contaOrigem, subSaldo);
+        conceder(contaDestino, addSaldo);
     }
 
     public void criarMovimentacao(Movimentacao movimentacao) {

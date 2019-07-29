@@ -3,6 +3,7 @@ package br.com.mloubake.desafiomobits.activity;
 import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.Toast;
@@ -10,6 +11,8 @@ import android.widget.Toast;
 import br.com.mloubake.desafiomobits.R;
 
 public class MenuPrincipalActivity extends AppCompatActivity {
+
+    private static final String TAG = "";
 
     Button btnSaldo;
     Button btnExtrato;
@@ -33,6 +36,21 @@ public class MenuPrincipalActivity extends AppCompatActivity {
         iniciarTransferencia();
         iniciarSolicitarGerente();
         iniciarTrocarUsuario();
+
+        recuperandoBundleLogin();
+    }
+
+    private void recuperandoBundleLogin() {
+        Intent intent = getIntent();
+        if(intent != null) {
+            int conta = getIntent().getExtras().getInt("conta");
+            int senha = getIntent().getExtras().getInt("senha");
+            String tipo = getIntent().getExtras().getString("tipo");
+            Log.d(TAG, "conta/senha/tipo" + conta + " / " + senha + " / " + tipo);
+        Toast.makeText(this, "AAA" + conta, Toast.LENGTH_SHORT).show();
+        Toast.makeText(this, "BBB" + senha, Toast.LENGTH_SHORT).show();
+        Toast.makeText(this, "CCC" + tipo, Toast.LENGTH_SHORT).show();
+        }
     }
 
     //Seta as ids de cada botão

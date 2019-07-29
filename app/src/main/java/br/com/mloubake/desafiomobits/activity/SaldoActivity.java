@@ -5,13 +5,12 @@ import android.os.Bundle;
 import android.widget.TextView;
 
 import br.com.mloubake.desafiomobits.R;
-import br.com.mloubake.desafiomobits.database.BancoDados;
-import br.com.mloubake.desafiomobits.model.Conta;
+import br.com.mloubake.desafiomobits.database.BDFuncoes;
 
 public class SaldoActivity extends AppCompatActivity {
 
     TextView txtSaldo;
-    BancoDados banco;
+    BDFuncoes banco;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -20,7 +19,7 @@ public class SaldoActivity extends AppCompatActivity {
 
         setandoSaldoId();
 
-        banco = new BancoDados(this);
+        banco = new BDFuncoes(this);
     }
 
     public void setandoSaldoId() {

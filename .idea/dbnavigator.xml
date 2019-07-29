@@ -22,13 +22,17 @@
   <component name="DBNavigator.Project.DatabaseBrowserManager">
     <autoscroll-to-editor value="false" />
     <autoscroll-from-editor value="true" />
-    <show-object-properties value="true" />
-    <loaded-nodes />
+    <show-object-properties value="false" />
+    <loaded-nodes>
+      <connection connection-id="2077d14d-c381-4b33-ab75-0788cd6854d7">
+        <schema name="main" object-types="view, table, index, constraint, column, dataset trigger" />
+      </connection>
+    </loaded-nodes>
   </component>
   <component name="DBNavigator.Project.DatabaseConsoleManager">
     <connection id="2077d14d-c381-4b33-ab75-0788cd6854d7">
-      <console name="Connection" type="STANDARD" schema="" session="Main"><![CDATA[b]]></console>
-      <console name="DB Desafio Mobits" type="STANDARD" schema="" session="Main" />
+      <console name="Connection" type="STANDARD" schema="" session="Main">b</console>
+      <console name="DB Desafio Mobits" type="STANDARD" schema="main" session="Main"><![CDATA[select * from usuario;]]></console>
     </connection>
   </component>
   <component name="DBNavigator.Project.DatabaseFileManager">
@@ -56,7 +60,9 @@
     <filters />
   </component>
   <component name="DBNavigator.Project.ScriptExecutionManager" clear-outputs="true">
-    <recently-used-interfaces />
+    <recently-used-interfaces>
+      <mapping database-type="SQLITE" interface-id="DEFAULT" />
+    </recently-used-interfaces>
   </component>
   <component name="DBNavigator.Project.Settings">
     <connections>
@@ -66,7 +72,7 @@
           <description value="" />
           <database-type value="SQLITE" />
           <config-type value="BASIC" />
-          <database-version value="9999.0" />
+          <database-version value="3.21" />
           <driver-source value="BUILTIN" />
           <driver-library value="" />
           <driver value="" />
@@ -75,7 +81,7 @@
           <port value="1234" />
           <database value="database" />
           <files>
-            <file path="C:\workspace\DesafioMobits" schema="main" />
+            <file path="C:\Users\MLoub\Documents\AndroidStudio\DeviceExplorer\motorola-moto_g_6_-0050781997\data\data\br.com.mloubake.desafiomobits\databases\bd.desafio" schema="main" />
           </files>
           <type value="NONE" />
           <user value="" />

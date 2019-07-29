@@ -1,31 +1,29 @@
 package br.com.mloubake.desafiomobits.model;
 
-import java.util.Date;
-
 public class Movimentacao {
 
     int movimentacaoId;
     String data;
     String horario;
-    String tipoMovimentacao;
+    String tipoMov;
     int contaOrigem;
     int contaDestino;
     float valor;
 
-    public Movimentacao(int movimentacaoId, String data, String horario, String tipoMovimentacao, int contaOrigem, int contaDestino, float valor) {
+    public Movimentacao(int movimentacaoId, String data, String horario, String tipoMov, int contaOrigem, int contaDestino, float valor) {
         this.movimentacaoId = movimentacaoId;
         this.data = data;
         this.horario = horario;
-        this.tipoMovimentacao = tipoMovimentacao;
+        this.tipoMov = tipoMov;
         this.contaOrigem = contaOrigem;
         this.contaDestino = contaDestino;
         this.valor = valor;
     }
 
-    public Movimentacao(String data, String horario, String tipoMovimentacao, int contaOrigem, int contaDestino, float valor) {
+    public Movimentacao(String data, String horario, String tipoMov, int contaOrigem, int contaDestino, float valor) {
         this.data = data;
         this.horario = horario;
-        this.tipoMovimentacao = tipoMovimentacao;
+        this.tipoMov = tipoMov;
         this.contaOrigem = contaOrigem;
         this.contaDestino = contaDestino;
         this.valor = valor;
@@ -55,11 +53,11 @@ public class Movimentacao {
         this.horario = horario;
     }
 
-    public String getTipoMovimentacao() {
-        return tipoMovimentacao;
+    public String getTipoMov() {
+        return tipoMov;
     }
-    public void setTipoMovimentacao(String tipoMovimentacao) {
-        this.tipoMovimentacao = tipoMovimentacao;
+    public void setTipoMov(String tipoMov) {
+        this.tipoMov = tipoMov;
     }
 
     public int getContaOrigem() {

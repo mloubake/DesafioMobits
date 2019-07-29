@@ -2,48 +2,39 @@ package br.com.mloubake.desafiomobits.model;
 
 public class Usuario {
 
-    int usuarioId;
-    int contaCorrente;
-//    Conta numeroConta;
-    int contaSenha;
-    int tipoCliente;
+    int conta;
+//    Conta conta;
+    int senha;
+    String tipo;
 
-    public Usuario(int usuarioId, int contaCorrente, int contaSenha, int tipoCliente) {
-        this.usuarioId = usuarioId;
-        this.contaCorrente = contaCorrente;
-        this.contaSenha = contaSenha;
-        this.tipoCliente = tipoCliente;
+    public Usuario(int conta, int senha, String tipo) {
+        this.conta = conta;
+        this.senha = senha;
+        this.tipo = tipo;
     }
 
     public Usuario() {
     }
 
-    public int getUsuarioId(){
-        return usuarioId;
+    public int getConta(){
+        return conta;
     }
-    public void setUsuarioId(int usuarioId) {
-        this.usuarioId = usuarioId;
-    }
-
-    public int getContaCorrente(){
-        return contaCorrente;
-    }
-    public void setContaCorrente(int contaCorrente) {
-        this.contaCorrente = contaCorrente;
+    public void setConta(int conta) {
+        this.conta = conta;
     }
 
-    public int getContaSenha() {
-        return contaSenha;
+    public int getSenha() {
+        return senha;
     }
-    public void setContaSenha(int contaSenha) {
-        this.contaSenha = contaSenha;
+    public void setSenha(int senha) {
+        this.senha = senha;
     }
 
-    public int getTipoCliente() {
-        return tipoCliente;
+    public String getTipo() {
+        return tipo;
     }
-    public void setTipoCliente(int tipoCliente) {
-        this.tipoCliente = tipoCliente;
+    public void setTipo(String tipo) {
+        this.tipo = tipo;
     }
 
 }

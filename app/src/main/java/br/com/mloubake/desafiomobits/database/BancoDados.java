@@ -1,143 +1,94 @@
 package br.com.mloubake.desafiomobits.database;
 
-import android.content.ContentValues;
 import android.content.Context;
-import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
+import android.database.sqlite.SQLiteOpenHelper;
+import android.util.Log;
 
-import br.com.mloubake.desafiomobits.model.Conta;
-import br.com.mloubake.desafiomobits.model.Usuario;
+public class BancoDados extends SQLiteOpenHelper {
 
-public class BancoDados {
-    private SQLiteDatabase db;
-    private BancoDadosNucleo banco;
+    //todo NA VERSÃO FINAL, TIRAR TODOS OS COMENTÁRIOS E TODOs QUE NÃO AJUDAM EM NADA DE TODAS AS TELAS
 
-    ContentValues valores;
-    long resultado;
+    //BD Nome e Versão
+    private static final String NOME_BD = "bd.desafio";
+    private static final int VERSAO_BD = 2;
+    //Tabelas
+    protected static final String TABELA_USUARIO = "usuario";
+    protected static final String TABELA_CONTA = "conta";
+    protected static final String TABELA_MOVIMENTACAO = "movimentacao";
+    //Usuário
+    protected static final String KEY_USUARIO_ID = "_id";
+    protected static final String KEY_USUARIO_CONTA = "conta";
+    protected static final String KEY_USUARIO_SENHA = "senha";
+    protected static final String KEY_USUARIO_TIPO = "tipo";
+    //Conta
+    protected static final String KEY_CONTA_ID = "_contaId";
+    protected static final String KEY_CONTA_CORRENTE = "conta";
+    protected static final String KEY_CONTA_SALDO = "saldo";
+    //Movimentação
+    protected static final String KEY_MOV_ID = "_id";
+    protected static final String KEY_MOV_DATA = "data";
+    protected static final String KEY_MOV_HORARIO = "horario";
+    protected static final String KEY_MOV_TIPO = "tipo";
+    protected static final String KEY_MOV_CONTA_ORIGEM = "contaOrigem";
+    protected static final String KEY_MOV_CONTA_DESTINO = "contaDestino";
+    protected static final String KEY_MOV_VALOR = "valor";
 
     public BancoDados(Context context) {
-        banco = new BancoDadosNucleo(context);
+        super(context, NOME_BD,null, VERSAO_BD);
     }
 
-    public Usuario pegarUsuarioConta(int conta, int senha) {
-        db = banco.getReadableDatabase();
+    //Cria Tabelas
+    @Override
+    public void onCreate(SQLiteDatabase bd) {
+        //Exemplo sql na mão
+//        bd.execSQL("create table  usuario " +
+//                "(_id integer primary key autoincrement, " +
+//                "nome text not null, " +
+//                "email text not null, " +
+//                "senha text not null);");
 
-        Usuario usuario = new Usuario();
+        //Tabela Usuario
+        String sqlUsuario = "CREATE TABLE " + TABELA_USUARIO + " ("
+                + KEY_USUARIO_ID + " integer primary key autoincrement,"
+                + KEY_USUARIO_CONTA + " integer,"
+                + KEY_USUARIO_SENHA + " integer,"
+                + KEY_USUARIO_TIPO + " varchar(6)"
+                + ")";
 
-        String query = "SELECT * FROM " + banco.TABELA_USUARIO;
+        //Tabela Conta
+        String sqlConta = "CREATE TABLE " + TABELA_CONTA + " ("
+                + KEY_CONTA_ID + " integer primary key autoincrement,"
+                + KEY_CONTA_CORRENTE + " integer,"
+                + KEY_CONTA_SALDO + " integer"
+                + ")";
 
-        Cursor cursor = db.rawQuery(query, null);
-        if(cursor != null) {
-            cursor.moveToFirst();
-        }
+        //Tabela Movimentação
+        String sqlMovimentacao = "CREATE TABLE " + TABELA_MOVIMENTACAO + " ("
+                + KEY_MOV_ID + " integer primary key autoincrement,"
+                + KEY_MOV_DATA + " string,"
+                + KEY_MOV_HORARIO + " string,"
+                + KEY_MOV_CONTA_ORIGEM + " integer,"
+                + KEY_MOV_CONTA_DESTINO + " integer,"
+                + KEY_MOV_TIPO + " string,"
+                + KEY_MOV_VALOR + " float"
+                + ")";
 
-        usuario.setContaCorrente(cursor.getInt(cursor.getColumnIndex(banco.KEY_USUARIO_CONTA_CORRENTE)));
-        usuario.setContaSenha(cursor.getInt(cursor.getColumnIndex(banco.KEY_USUARIO_CONTA_SENHA)));
-        usuario.setTipoCliente(cursor.getInt(cursor.getColumnIndex(banco.KEY_USUARIO_TIPO_CLIENTE)));
-
-        return usuario;
+        //Cria as tabelas no BD
+        bd.execSQL(sqlUsuario);
+        bd.execSQL(sqlConta);
+        bd.execSQL(sqlMovimentacao);
     }
 
-    //Saldo
-    public Float recuperarSaldoUsuario(/*numero da conta*/) {
-        //Pega a referência para a leitura do DB
-        db = banco.getReadableDatabase();
-
-        //Executando a query
-        Cursor cursor = db.query(banco.TABELA_CONTA,
-                new String[]{banco.KEY_SALDO},
-                null /*where com o num conta*/,
-                null,
-                null,
-                null,
-                null,
-                null);
-        //Se achar resultados, move para o primeiro item
-        if(cursor != null) {
-            cursor.moveToFirst();
-        }
-        float saldo = cursor.getFloat(cursor.getColumnIndex(banco.KEY_SALDO));
-
-        db.close();
-
-        return saldo;
-    }
-
-
-    //Activity Extrato
-
-    //Activity Saque
-
-    //Activity Depósito
-    public void depositarValor(Conta conta) {
-        valores = new ContentValues();
-        valores.put(BancoDadosNucleo.KEY_SALDO,conta.getSaldo());
-
-//        db.update(banco.TABELA_CONTA,
-//                valores,
-//                ,
-//                new String[]{"" + conta.getSaldo()});
-    }
-
-//    public void testeSaldo(float saldo) {
-//        db = banco.getWritableDatabase();
-//        valores = new ContentValues();
-//        valores.put(banco.KEY_SALDO, saldo);
-////        db.insert(banco.TABELA_CONTA, null, valores);
-//        db.update(banco.TABELA_CONTA, valores, null, null);
-//        db.close();
-//    }
-
-    //TODO fazer lista de tarefas do que falta
-
-    public void testeSaldo(Conta conta) {
-        //Pega a referência para escrever no banco
-        db = banco.getWritableDatabase();
-        //Instância ContentValues para adicionar chave Coluna/Valor
-        valores = new ContentValues();
-        //Inserece as infos de Coluna/Valor
-        valores.put(banco.KEY_CONTA_CORRENTE, conta.getNumeroConta());
-        valores.put(banco.KEY_SALDO, conta.getSaldo());
-        //Executa a alteração
-        db.insert(banco.TABELA_CONTA,
-                null,
-                valores);
-        //Fecha o banco após operação
-        db.close();
-    }
-
-    public float testeUpdateSaldo(int conta, float valor) {
-        db = banco.getWritableDatabase();
-        valores = new ContentValues();
-        valores.put(banco.KEY_SALDO, valor);
-
-        float saldo = db.update(banco.TABELA_CONTA,
-                valores,
-                banco.KEY_SALDO + "= ?",
-                new String[]{String.valueOf(conta)});
-
-        return saldo;
-    }
-
-    //Activity Transferência
-
-    //Activity VisitaGerente
-    public String inserirDadoUsuario(int contaCorrente, int contaSenha, int tipoCliente) {
-        db = banco.getWritableDatabase();
-        valores = new ContentValues();
-
-        valores.put(BancoDadosNucleo.KEY_CONTA_CORRENTE, contaCorrente);
-        valores.put(BancoDadosNucleo.KEY_CONTA_SENHA, contaSenha);
-        valores.put(BancoDadosNucleo.KEY_TIPO_CONTA, tipoCliente);
-
-        resultado = db.insert(BancoDadosNucleo.TABELA_USUARIO, null, valores);
-        db.close();
-
-        if(resultado == -1) {
-            return "Erro ao inserir";
-        }
-        else
-            return "Inserção com sucesso";
+    //Atualiza BD
+    @Override
+    public void onUpgrade(SQLiteDatabase bd, int arg1, int arg2) {
+        //Dropa as tabelas atuais
+        bd.execSQL("DROP TABLE IF EXISTS '" + TABELA_USUARIO + "'");
+        bd.execSQL("DROP TABLE IF EXISTS '" + TABELA_CONTA +"'");
+        bd.execSQL("DROP TABLE IF EXISTS '" + TABELA_MOVIMENTACAO + "'");
+        //Cria BD com nova versão
+        onCreate(bd);
+        Log.d("", "novaVersão: " + bd.getVersion());
     }
 }
-

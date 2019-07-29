@@ -2,33 +2,26 @@ package br.com.mloubake.desafiomobits.model;
 
 public class Conta {
 
-    int contaId;
-    int numeroConta;
-    int tipoConta;
+    int numero;
     float saldo;
     Movimentacao movimentacao;
 
-    public Conta(int numeroConta, float saldos) {
-        this.numeroConta = numeroConta;
+    public Conta(int numero, float saldo) {
+        this.numero = numero;
         this.saldo = saldo;
     }
 
-    public Conta() {
-
+    public Conta(int numero, float saldo, Movimentacao movimentacao) {
+        this.numero = numero;
+        this.saldo = saldo;
+        this.movimentacao = movimentacao;
     }
 
-    public int getContaId() {
-        return contaId;
+    public int getNumero() {
+        return numero;
     }
-    public void setContaId(int contaId) {
-        this.contaId = contaId;
-    }
-
-    public int getNumeroConta() {
-        return numeroConta;
-    }
-    public void setNumeroConta(int numeroConta) {
-        this.numeroConta = numeroConta;
+    public void setNumero(int numero) {
+        this.numero = numero;
     }
 
     public float getSaldo() {
@@ -37,4 +30,13 @@ public class Conta {
     public void setSaldo(float saldo) {
         this.saldo = saldo;
     }
+
+    public Movimentacao getMovimentacao() {
+        return movimentacao;
+    }
+    public void setMovimentacao(Movimentacao movimentacao) {
+        this.movimentacao = movimentacao;
+    }
+
+
 }

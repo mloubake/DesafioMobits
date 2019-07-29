@@ -1,7 +1,6 @@
 package br.com.mloubake.desafiomobits.adapter;
 
 import android.content.Context;
-import android.support.annotation.NonNull;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -34,7 +33,7 @@ public class MovimentacaoAdapter extends RecyclerView.Adapter<RecyclerView.ViewH
     public void onBindViewHolder(RecyclerView.ViewHolder myViewHolder, int position) {
         ((MovimentacaoViewHolder) myViewHolder).txtData.setText(mMovimentacaoList.get(position).getData());
         ((MovimentacaoViewHolder) myViewHolder).txtHorario.setText(mMovimentacaoList.get(position).getHorario());
-        ((MovimentacaoViewHolder) myViewHolder).txtMovimentacao.setText(mMovimentacaoList.get(position).getTipoMovimentacao());
+        ((MovimentacaoViewHolder) myViewHolder).txtMovimentacao.setText(mMovimentacaoList.get(position).getTipoMov());
         ((MovimentacaoViewHolder) myViewHolder).txtValor.setText(String.valueOf((int) mMovimentacaoList.get(position).getValor()));
     }
 

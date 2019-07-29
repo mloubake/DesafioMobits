@@ -12,8 +12,7 @@ import java.time.LocalDate;
 import java.time.LocalTime;
 
 import br.com.mloubake.desafiomobits.R;
-import br.com.mloubake.desafiomobits.database.BancoDados;
-import br.com.mloubake.desafiomobits.model.Conta;
+import br.com.mloubake.desafiomobits.database.BDFuncoes;
 
 public class DepositoActivity extends AppCompatActivity {
 
@@ -24,7 +23,7 @@ public class DepositoActivity extends AppCompatActivity {
     //Atributos da Data e Hora
     LocalDate data;
     LocalTime horario;
-    BancoDados crud;
+    BDFuncoes bd;
 
     float valorDepositado;
 
@@ -32,14 +31,12 @@ public class DepositoActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_deposito);
-        //Método para setar os IDs
+
         setupDepositoId();
 
-        //Instanciando o BD
-        crud = new BancoDados(getBaseContext());
+        bd = new BDFuncoes(getBaseContext());
     }
 
-    //Seta os IDs de cada View
     private void setupDepositoId() {
         etDeposito = findViewById(R.id.etDeposito);
         btnDepositar = findViewById(R.id.btnDepositar);
@@ -48,13 +45,10 @@ public class DepositoActivity extends AppCompatActivity {
     @Override
     protected void onResume() {
         super.onResume();
-        //Método
         depositar();
     }
 
-    //Botão para executar a função depositarSaldo
     public void depositar() {
-        //Criando o click do botão Depositar
         btnDepositar.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -63,28 +57,21 @@ public class DepositoActivity extends AppCompatActivity {
         });
     }
 
-    //Executa o depósito na conta do usuário
     public void depositarSaldo() {
-        //Pegando todas as infos necessárias
 //            pegarDataHora(); usar depois
 
         valorDepositado = 0f;
-
-        //Tratando o erro
         if(!TextUtils.isEmpty(etDeposito.getText())) {
-            //Pega o valor passado no etDeposito
             valorDepositado = Float.parseFloat(etDeposito.getText().toString());
         }
 
-//        crud.testeSaldo(new Conta(12345, valorDepositado));
+//        bd.testeSaldo(new Conta(12345, valorDepositado));
 
-        valorDepositado = Float.parseFloat(etDeposito.getText().toString());
-        //Executa a soma
-        float saldo = crud.recuperarSaldoUsuario();
-        float soma =saldo + valorDepositado;
+        float saldo = bd.recuperarSaldoUsuario();
+        float soma = saldo + valorDepositado;
 
-        crud.testeUpdateSaldo(12345,soma);
-        //Condição para executar o depósito e tratamento de erros
+        bd.testeUpdateSaldo(12345,soma);
+
         //todo usar substituir os toasts por alertdialog (fazer por último)
         //todo ver casa decimal formatada para 2 dígitos
 
@@ -103,7 +90,6 @@ public class DepositoActivity extends AppCompatActivity {
     }
 
     public void pegarDataHora() {
-        //Pegando Data e Hora do Sistema
         //TODO Ver se há como pegar a hora/data da internet
         if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.O) {
             data = LocalDate.now();
@@ -111,12 +97,9 @@ public class DepositoActivity extends AppCompatActivity {
         }
     }
 
-
     @Override
     protected void onPause() {
         super.onPause();
 
     }
-
 }
-

@@ -32,6 +32,7 @@ public class TransferenciaActivity extends AppCompatActivity {
     float valorTransferido;
     int contaOrigem;
     int contaDestino;
+    String tipo;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -48,6 +49,7 @@ public class TransferenciaActivity extends AppCompatActivity {
         Intent intent = getIntent();
         if(intent != null) {
             contaOrigem = getIntent().getExtras().getInt("conta");
+            tipo = getIntent().getExtras().getString("tipo");
         }
     }
 
@@ -73,27 +75,72 @@ public class TransferenciaActivity extends AppCompatActivity {
     }
 
     private void transferencia() {
-        valorTransferido = 0f;
         contaDestino = 0;
-        if(!TextUtils.isEmpty(etValor.getText())){
-            valorTransferido = Float.parseFloat(etValor.getText().toString());
-        }
+        valorTransferido = 0f;
         if (!TextUtils.isEmpty(etContaDestino.getText())) {
             contaDestino = Integer.parseInt(etContaDestino.getText().toString());
         }
+        if(!TextUtils.isEmpty(etValor.getText())){
+            valorTransferido = Float.parseFloat(etValor.getText().toString());
+        }
+//        validarCampoVazio();
 
-        float saldoSaque = bd.getSaldo(contaOrigem).getSaldo();
-        float subSaque = saldoSaque - valorTransferido;
-        float saldoDeposito = bd.getSaldo(contaDestino).getSaldo();
-        float addSaque = saldoDeposito + valorTransferido;
-        bd.transferencia(contaOrigem, contaDestino, subSaque, addSaque);
+        if(etContaDestino.getText().length() < 5) {
+            Toast.makeText(this, "Conta Corrente deve conter 5 digitos", Toast.LENGTH_SHORT).show();
+            return;
+        }
+        if(etValor.getText().length() == 0) {
+            Toast.makeText(this, "Valor inválido", Toast.LENGTH_SHORT).show();
+            return;
+        }
 
-        Toast.makeText(TransferenciaActivity.this, "Tranferido " + valorTransferido, Toast.LENGTH_SHORT).show();
-        pegarDataHora();
-        bd.criarMovimentacao(new Movimentacao(data, horario, valorTransferido,
-                contaOrigem, contaDestino, "Transferência"));
+        if(etContaDestino.getText().toString().equals(String.valueOf(contaOrigem))) {
+            Toast.makeText(this, "Conta Corrente inválida, por favor, verifique, a conta digitada",
+                    Toast.LENGTH_SHORT).show();
+        } else {
+            float saldo = bd.getSaldo(contaOrigem).getSaldo();
+            float subSaque = saldo - valorTransferido;
+            float saldoInicialDeposito = bd.getSaldo(contaDestino).getSaldo();
+            float addSaque = saldoInicialDeposito + valorTransferido;
+
+            if(tipo.matches("Normal")) {
+                if(valorTransferido > 0 && valorTransferido < 1000) {
+                    bd.transferencia(contaOrigem, contaDestino, subSaque, addSaque);
+                    saldo = bd.getSaldo(contaOrigem).getSaldo();
+                    float taxa = saldo - 8;
+                    bd.retirar(contaOrigem, taxa);
+                    validarValor();
+                    pegarDataHora();
+                    bd.criarMovimentacao(new Movimentacao(data, horario, valorTransferido,
+                            contaOrigem, contaDestino, "Transferência + Taxa de: R$ " + 8));
+
+                } else {
+                    validarValor();
+                }
+            }
+            if(tipo.matches("VIP")) {
+                bd.transferencia(contaOrigem, contaDestino, subSaque, addSaque);
+                saldo = bd.getSaldo(contaOrigem).getSaldo();
+                float taxa = (float) (valorTransferido* 0.8/100);
+                float saldoFinal = saldo - taxa;
+                bd.retirar(contaOrigem, saldoFinal);
+
+                validarValor();
+                pegarDataHora();
+                bd.criarMovimentacao(new Movimentacao(data, horario, valorTransferido,
+                        contaOrigem, contaDestino, "Transferência + Taxa de:" + taxa));
+            }
+        }
     }
 
+    public void validarValor() {
+        if(valorTransferido > 0) {
+            Toast.makeText(TransferenciaActivity.this, "Transferência Efetuada: R$" + valorTransferido, Toast.LENGTH_SHORT).show();
+        }
+        else {
+            Toast.makeText(TransferenciaActivity.this, "Transferência inválida, por favor, verifique o valor", Toast.LENGTH_SHORT).show();
+        }
+    }
     public void pegarDataHora() {
         //TODO Ver se há como pegar a hora/data da internet
         if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.O) {

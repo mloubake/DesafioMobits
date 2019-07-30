@@ -3,15 +3,24 @@ package br.com.mloubake.desafiomobits.activity;
 import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 
+import java.time.LocalDate;
+import java.time.LocalTime;
+
 import br.com.mloubake.desafiomobits.R;
 import br.com.mloubake.desafiomobits.database.BDFuncoes;
+import br.com.mloubake.desafiomobits.model.Movimentacao;
 
 public class SolicitarGerenteActivity extends AppCompatActivity {
 
+    private static final String TAG = "";
     Button btnSolicitarGerente;
+
+    LocalDate data;
+    LocalTime horario;
 
     int conta;
 
@@ -56,8 +65,20 @@ public class SolicitarGerenteActivity extends AppCompatActivity {
 
     private void solicitcao() {
         float saldo = bd.getSaldo(conta).getSaldo();
+        float valorGerente = 50f;
 
-        float subSaldo = saldo - 50;
+        float subSaldo = saldo - valorGerente;
         bd.retirar(conta, subSaldo);
+
+        bd.criarMovimentacao(new Movimentacao(data, horario, valorGerente, conta, conta,"Solicitação do Gerente"));
+    }
+
+    public void pegarDataHora() {
+        //TODO Ver se há como pegar a hora/data da internet
+        if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.O) {
+            data = LocalDate.now();
+            horario = LocalTime.now();
+            Log.d(TAG, "DATA/HORA: " + data + " / " + horario);
+        }
     }
 }

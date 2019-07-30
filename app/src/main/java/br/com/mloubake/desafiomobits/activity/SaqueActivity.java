@@ -12,6 +12,7 @@ import android.widget.Toast;
 
 import java.time.LocalDate;
 import java.time.LocalTime;
+import java.time.temporal.ChronoUnit;
 
 import br.com.mloubake.desafiomobits.R;
 import br.com.mloubake.desafiomobits.database.BDFuncoes;
@@ -81,21 +82,23 @@ public class SaqueActivity extends AppCompatActivity {
 
 
 
-
-//
 //        if(tipo.matches("VIP")) {
-//            int horarioAtual = 0; //pegar o horario do banco
-//            int horarioRetira = 0;
-//            if(valorSacado > saldo) {
-//                saldo -= (saldo *(0.1/100) * (horarioAtual - horarioRetira));
-//            }
-//        } else if(tipo.matches("Normal")){
-//            Toast.makeText(SaqueActivity.this,"Impossível realizar saque. Valor sacado além do permitido ", Toast.LENGTH_LONG).show();
-//        }
-
+////            int horarioAtual = bd.getSaldo().g; //pegar o horario do banco
+////            int horarioRetira = 0;
+////            if(valorSacado > saldo) {
+////                float juros = (float) (saldo *(0.1/100);
+////                        * (horarioAtual - horarioRetira));
+////            }
+////        } else {
+////            Toast.makeText(SaqueActivity.this,"Impossível realizar saque. Valor sacado além do permitido ", Toast.LENGTH_LONG).show();
+////        }
+//
         saldo = bd.getSaldo(conta).getSaldo();
         subSaldo = saldo - valorSacado;
         bd.retirar(conta, subSaldo);
+
+
+
 
         pegarDataHora();
         bd.criarMovimentacao(new Movimentacao(data, horario, valorSacado,

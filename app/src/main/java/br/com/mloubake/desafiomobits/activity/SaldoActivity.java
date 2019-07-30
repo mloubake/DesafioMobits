@@ -42,7 +42,7 @@ public class SaldoActivity extends AppCompatActivity {
     }
 
     public void atualizarSaldo() {
-        String resultadoSaldo = String.valueOf(Math.floor(banco.getSaldo(conta).getSaldo()));
+        String resultadoSaldo = String.valueOf(banco.getSaldo(conta).getSaldo());
         txtSaldo.setText("R$ " + resultadoSaldo);
     }
 

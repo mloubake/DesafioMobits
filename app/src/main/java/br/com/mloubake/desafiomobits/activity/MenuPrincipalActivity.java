@@ -33,13 +33,13 @@ public class MenuPrincipalActivity extends AppCompatActivity {
 
         setarIds();
 
-        iniciarSaldo();
-        iniciarExtrato();
-        iniciarSaque();
-        iniciarDeposito();
-        iniciarTransferencia();
-        iniciarSolicitarGerente();
-        iniciarTrocarUsuario();
+        verificarSaldo();
+        verificarExtrato();
+        sacar();
+        depositar();
+        transfererir();
+        solicitarGerente();
+        trocarUsuario();
 
         recuperandoBundleLogin();
 
@@ -76,7 +76,7 @@ public class MenuPrincipalActivity extends AppCompatActivity {
     }
 
     //Iniciar Activity Saldo
-    private void iniciarSaldo() {
+    private void verificarSaldo() {
         btnSaldo.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -89,7 +89,7 @@ public class MenuPrincipalActivity extends AppCompatActivity {
         });
     }
     //Iniciar Activity Extrato
-    private void iniciarExtrato() {
+    private void verificarExtrato() {
         btnExtrato.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -99,7 +99,7 @@ public class MenuPrincipalActivity extends AppCompatActivity {
         });
     }
     //Iniciar Activity Saque
-    private void iniciarSaque() {
+    private void sacar() {
         btnSaque.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -113,7 +113,7 @@ public class MenuPrincipalActivity extends AppCompatActivity {
         });
     }
     //Iniciar Activity Depósito
-    private void iniciarDeposito() {
+    private void depositar() {
         btnDeposito.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -126,13 +126,14 @@ public class MenuPrincipalActivity extends AppCompatActivity {
         });
     }
     //Iniciar Activity Transferência
-    private void iniciarTransferencia() {
+    private void transfererir() {
         btnTransferencia.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 Intent intent = new Intent(MenuPrincipalActivity.this, TransferenciaActivity.class);
                 Bundle bundle = new Bundle();
                 bundle.putInt("conta", conta);
+                bundle.putString("tipo", tipo);
                 intent.putExtras(bundle);
                 startActivity(intent);
             }
@@ -140,7 +141,7 @@ public class MenuPrincipalActivity extends AppCompatActivity {
     }
     //Iniciar Activity SolicitarGerente
     //todo ver o estado de visibilidade GONE
-    private void iniciarSolicitarGerente() {
+    private void solicitarGerente() {
         btnSolicitarGerente.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -149,7 +150,7 @@ public class MenuPrincipalActivity extends AppCompatActivity {
         });
     }
     //Iniciar Troca de Usuário
-    private void iniciarTrocarUsuario() {
+    private void trocarUsuario() {
         btnTrocarUsuario.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {

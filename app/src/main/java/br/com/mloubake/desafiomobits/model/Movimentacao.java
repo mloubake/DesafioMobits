@@ -5,14 +5,14 @@ import java.time.LocalTime;
 
 public class Movimentacao {
 
-    LocalDate data;
-    LocalTime horario;
+    String data;
+    String horario;
     float valor;
     int contaOrigem;
     int contaDestino;
     String tipoMov;
 
-    public Movimentacao(LocalDate data, LocalTime horario, float valor,
+    public Movimentacao(String data, String horario, float valor,
                         int contaOrigem, int contaDestino, String tipoMov) {
         this.data = data;
         this.horario = horario;
@@ -25,17 +25,17 @@ public class Movimentacao {
     public Movimentacao() {
     }
 
-    public LocalDate getData() {
+    public String getData() {
         return data;
     }
-    public void setData(LocalDate data) {
+    public void setData(String data) {
         this.data = data;
     }
 
-    public LocalTime getHorario() {
+    public String getHorario() {
         return horario;
     }
-    public void setHorario(LocalTime horario) {
+    public void setHorario(String horario) {
         this.horario = horario;
     }
 

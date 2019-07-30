@@ -25,8 +25,8 @@ public class TransferenciaActivity extends AppCompatActivity {
     EditText etValor;
     Button btnTransferir;
 
-    LocalDate data;
-    LocalTime horario;
+    String data;
+    String horario;
     BDFuncoes bd;
 
     float valorTransferido;
@@ -144,8 +144,8 @@ public class TransferenciaActivity extends AppCompatActivity {
     public void pegarDataHora() {
         //TODO Ver se há como pegar a hora/data da internet
         if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.O) {
-            data = LocalDate.now();
-            horario = LocalTime.now();
+            data = String.valueOf(LocalDate.now());
+            horario = String.valueOf(LocalTime.now());
             Log.d(TAG, "DATA/HORA: " + data + " / " + horario);
         }
     }

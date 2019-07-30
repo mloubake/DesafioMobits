@@ -4,7 +4,12 @@ import android.content.ContentValues;
 import android.content.Context;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
+import android.os.Build;
 import android.util.Log;
+
+import java.time.LocalDate;
+import java.time.LocalTime;
+import java.util.ArrayList;
 
 import br.com.mloubake.desafiomobits.model.Conta;
 import br.com.mloubake.desafiomobits.model.Movimentacao;
@@ -81,6 +86,7 @@ public class BDFuncoes {
 
     public Conta getSaldo(int contaNumero) {
         db = bancoDados.getReadableDatabase();
+
         String query = "SELECT saldo FROM conta WHERE conta = " + contaNumero;
 
         Cursor cursor = db.rawQuery(query, null);
@@ -147,6 +153,45 @@ public class BDFuncoes {
         db.close();
     }
 
+    public ArrayList<Movimentacao> getMovimentacao(int conta) {
+        db = bancoDados.getReadableDatabase();
+
+        String query = "SELECT * FROM movimentacao WHERE contaOrigem =" + conta /*+ " OR contaDestino = " + conta*/;
+
+        Cursor cursor = db.rawQuery(query, null);
+//        Cursor cursor = db.query(bancoDados.TABELA_MOVIMENTACAO,
+//                new String[]{bancoDados.KEY_MOV_DATA,
+//                bancoDados.KEY_MOV_HORARIO,
+//                bancoDados.KEY_MOV_VALOR,
+//                bancoDados.KEY_MOV_CONTA_ORIGEM,
+//                bancoDados.KEY_MOV_CONTA_DESTINO,
+//                bancoDados.KEY_MOV_TIPO},
+//                null,
+//                null,
+//                null,
+//                null,
+//                null);
+
+        ArrayList<Movimentacao> arrayListMov = new ArrayList<>();
+
+        if(cursor != null && cursor.moveToFirst()) {
+            do {
+                String data = cursor.getString(cursor.getColumnIndex(bancoDados.KEY_MOV_DATA));
+                String horario = cursor.getString(cursor.getColumnIndex(bancoDados.KEY_MOV_HORARIO));
+                float valor = cursor.getFloat(cursor.getColumnIndex(bancoDados.KEY_MOV_VALOR));
+                int contaOrigem = cursor.getInt(cursor.getColumnIndex(bancoDados.KEY_MOV_CONTA_ORIGEM));
+                int contaDestino = cursor.getInt(cursor.getColumnIndex(bancoDados.KEY_MOV_CONTA_DESTINO));
+                String tipoMov = cursor.getString(cursor.getColumnIndex(bancoDados.KEY_MOV_TIPO));
+
+                arrayListMov.add(new Movimentacao(data, horario, valor, contaOrigem, contaDestino, tipoMov));
+            }
+            while (cursor.moveToNext());
+        }
+        cursor.close();
+        db.close();
+
+        return arrayListMov;
+    }
 
     public void testeSaldo(Conta conta) {
         //Pega a referência para escrever no bancoDados

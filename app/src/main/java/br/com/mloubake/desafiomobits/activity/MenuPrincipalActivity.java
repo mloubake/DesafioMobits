@@ -94,6 +94,9 @@ public class MenuPrincipalActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 Intent intent = new Intent(MenuPrincipalActivity.this, ExtratoActivity.class);
+                Bundle bundle = new Bundle();
+                bundle.putInt("conta", conta);
+                intent.putExtras(bundle);
                 startActivity(intent);
             }
         });

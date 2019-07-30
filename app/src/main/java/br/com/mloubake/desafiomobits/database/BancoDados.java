@@ -29,10 +29,10 @@ public class BancoDados extends SQLiteOpenHelper {
     protected static final String KEY_MOV_ID = "_id";
     protected static final String KEY_MOV_DATA = "data";
     protected static final String KEY_MOV_HORARIO = "horario";
-    protected static final String KEY_MOV_TIPO = "tipo";
+    protected static final String KEY_MOV_VALOR = "valor";
     protected static final String KEY_MOV_CONTA_ORIGEM = "contaOrigem";
     protected static final String KEY_MOV_CONTA_DESTINO = "contaDestino";
-    protected static final String KEY_MOV_VALOR = "valor";
+    protected static final String KEY_MOV_TIPO = "tipo";
 
     public BancoDados(Context context) {
         super(context, NOME_BD,null, VERSAO_BD);

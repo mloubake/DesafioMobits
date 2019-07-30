@@ -9,6 +9,8 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
+
+import java.text.DateFormat;
 import java.time.LocalDate;
 import java.time.LocalTime;
 import br.com.mloubake.desafiomobits.R;
@@ -25,8 +27,8 @@ public class DepositoActivity extends AppCompatActivity {
     EditText etDeposito;
     Button btnDepositar;
 
-    LocalDate data;
-    LocalTime horario;
+    String data;
+    String horario;
     BDFuncoes bd;
 
     float valorDepositado;
@@ -101,9 +103,8 @@ public class DepositoActivity extends AppCompatActivity {
     public void pegarDataHora() {
         //TODO Ver se há como pegar a hora/data da internet
         if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.O) {
-            data = LocalDate.now();
-            horario = LocalTime.now();
-            Log.d(TAG, "DATA/HORA: " + data + " / " + horario);
+            data = String.valueOf(LocalDate.now());
+            horario = String.valueOf(LocalTime.now());
         }
     }
 }

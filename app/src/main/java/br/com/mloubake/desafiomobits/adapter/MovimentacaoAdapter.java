@@ -10,16 +10,18 @@ import android.widget.TextView;
 import java.util.ArrayList;
 
 import br.com.mloubake.desafiomobits.R;
+import br.com.mloubake.desafiomobits.database.BDFuncoes;
 import br.com.mloubake.desafiomobits.model.Movimentacao;
 
 public class MovimentacaoAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
 
     Context mContext;
-    ArrayList<Movimentacao> mMovimentacaoList;
+    ArrayList<Movimentacao> mMovList;
+    BDFuncoes bd;
 
     public MovimentacaoAdapter(Context context, ArrayList<Movimentacao> movimentacaoList) {
         mContext = context;
-        mMovimentacaoList = movimentacaoList;
+        mMovList = movimentacaoList;
     }
 
     @Override
@@ -31,34 +33,36 @@ public class MovimentacaoAdapter extends RecyclerView.Adapter<RecyclerView.ViewH
 
     @Override
     public void onBindViewHolder(RecyclerView.ViewHolder myViewHolder, int position) {
-//        ((MovimentacaoViewHolder) myViewHolder).txtData.setText(mMovimentacaoList.get(position).getData());
-//        ((MovimentacaoViewHolder) myViewHolder).txtHorario.setText(mMovimentacaoList.get(position).getHorario());
-//        ((MovimentacaoViewHolder) myViewHolder).txtMovimentacao.setText(mMovimentacaoList.get(position).getTipoMov());
-//        ((MovimentacaoViewHolder) myViewHolder).txtValor.setText(String.valueOf((int) mMovimentacaoList.get(position).getValor()));
+        ((MovimentacaoViewHolder) myViewHolder).txtData.setText(String.valueOf(mMovList.get(position).getData()));
+        ((MovimentacaoViewHolder) myViewHolder).txtHorario.setText(String.valueOf(mMovList.get(position).getHorario()));
+        ((MovimentacaoViewHolder) myViewHolder).txtValor.setText(String.valueOf(mMovList.get(position).getValor()));
+        ((MovimentacaoViewHolder) myViewHolder).txtContaOrigem.setText(String.valueOf(mMovList.get(position).getContaOrigem()));
+        ((MovimentacaoViewHolder) myViewHolder).txtContaDestino.setText(String.valueOf(mMovList.get(position).getContaDestino()));
+        ((MovimentacaoViewHolder) myViewHolder).txtTipoMov.setText(String.valueOf(mMovList.get(position).getTipoMov()));
     }
 
     @Override
     public int getItemCount() {
-        return mMovimentacaoList.size();
+        return mMovList.size();
     }
 
     public class MovimentacaoViewHolder extends RecyclerView.ViewHolder {
         TextView txtData;
         TextView txtHorario;
-        TextView txtMovimentacao;
         TextView txtValor;
-        TextView txtTransferencia;
-        TextView txtConta;
+        TextView txtContaOrigem;
+        TextView txtContaDestino;
+        TextView txtTipoMov;
 
         public MovimentacaoViewHolder(View itemView) {
             super(itemView);
 
-            txtData = itemView.findViewById(R.id.txtDataExtrato);
-            txtHorario = itemView.findViewById(R.id.txtHorarioExtrato);
-            txtMovimentacao = itemView.findViewById(R.id.txtMovimentacaoExtrato);
-            txtValor = itemView.findViewById(R.id.txtValorExtrato);
-            txtTransferencia = itemView.findViewById(R.id.txtTransferencia);
-            txtConta = itemView.findViewById(R.id.txtConta);
+            txtData = itemView.findViewById(R.id.txtDataMov);
+            txtHorario = itemView.findViewById(R.id.txtHorarioMov);
+            txtValor = itemView.findViewById(R.id.txtValorMov);
+            txtContaOrigem = itemView.findViewById(R.id.txtContaOrigem);
+            txtContaDestino = itemView.findViewById(R.id.txtContaDestino);
+            txtTipoMov = itemView.findViewById(R.id.txtTipoMov);
         }
     }
 }

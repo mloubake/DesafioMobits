@@ -80,29 +80,14 @@ public class SaqueActivity extends AppCompatActivity {
             valorSacado = Float.parseFloat(etSaque.getText().toString());
         }
 
-
-
-//        if(tipo.matches("VIP")) {
-////            int horarioAtual = bd.getSaldo().g; //pegar o horario do banco
-////            int horarioRetira = 0;
-////            if(valorSacado > saldo) {
-////                float juros = (float) (saldo *(0.1/100);
-////                        * (horarioAtual - horarioRetira));
-////            }
-////        } else {
-////            Toast.makeText(SaqueActivity.this,"Impossível realizar saque. Valor sacado além do permitido ", Toast.LENGTH_LONG).show();
-////        }
-//
         saldo = bd.getSaldo(conta).getSaldo();
         subSaldo = saldo - valorSacado;
         bd.retirar(conta, subSaldo);
 
 
-
-
         pegarDataHora();
         bd.criarMovimentacao(new Movimentacao(data, horario, valorSacado,
-                conta, conta, "Saque"));
+                conta,"Saque"));
 
         validarValor();
     }

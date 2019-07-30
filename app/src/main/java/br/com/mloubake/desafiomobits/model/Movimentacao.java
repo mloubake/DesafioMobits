@@ -22,7 +22,13 @@ public class Movimentacao {
         this.tipoMov = tipoMov;
     }
 
-    public Movimentacao() {
+    public Movimentacao(String data, String horario, float valor,
+                        int contaOrigem, String tipoMov) {
+        this.data = data;
+        this.horario = horario;
+        this.valor = valor;
+        this.contaOrigem = contaOrigem;
+        this.tipoMov = tipoMov;
     }
 
     public String getData() {

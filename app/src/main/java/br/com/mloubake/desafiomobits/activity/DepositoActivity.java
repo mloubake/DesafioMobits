@@ -86,7 +86,8 @@ public class DepositoActivity extends AppCompatActivity {
 
         pegarDataHora();
         bd.criarMovimentacao(new Movimentacao(data, horario, valorDepositado,
-                conta, conta, "Depósito"));
+                conta, "Depósito"));
+
 
         validarValor();
     }

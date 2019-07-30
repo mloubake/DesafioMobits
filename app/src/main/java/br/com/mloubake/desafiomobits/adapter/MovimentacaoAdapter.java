@@ -5,6 +5,7 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import java.util.ArrayList;
@@ -39,6 +40,10 @@ public class MovimentacaoAdapter extends RecyclerView.Adapter<RecyclerView.ViewH
         ((MovimentacaoViewHolder) myViewHolder).txtContaOrigem.setText(String.valueOf(mMovList.get(position).getContaOrigem()));
         ((MovimentacaoViewHolder) myViewHolder).txtContaDestino.setText(String.valueOf(mMovList.get(position).getContaDestino()));
         ((MovimentacaoViewHolder) myViewHolder).txtTipoMov.setText(String.valueOf(mMovList.get(position).getTipoMov()));
+
+        if(mMovList.get(position).getContaDestino() == 0) {
+            ((MovimentacaoViewHolder) myViewHolder).layoutMeioInf.setVisibility(View.GONE);
+        }
     }
 
     @Override
@@ -54,6 +59,8 @@ public class MovimentacaoAdapter extends RecyclerView.Adapter<RecyclerView.ViewH
         TextView txtContaDestino;
         TextView txtTipoMov;
 
+        LinearLayout layoutMeioInf;
+
         public MovimentacaoViewHolder(View itemView) {
             super(itemView);
 
@@ -63,6 +70,8 @@ public class MovimentacaoAdapter extends RecyclerView.Adapter<RecyclerView.ViewH
             txtContaOrigem = itemView.findViewById(R.id.txtContaOrigem);
             txtContaDestino = itemView.findViewById(R.id.txtContaDestino);
             txtTipoMov = itemView.findViewById(R.id.txtTipoMov);
+
+            layoutMeioInf = itemView.findViewById(R.id.layoutMeioInf);
         }
     }
 }

@@ -94,7 +94,28 @@ public class BDFuncoes {
         if(cursor != null && cursor.moveToFirst()) {
             do {
                 conta.setSaldo(cursor.getFloat(cursor.getColumnIndex(bancoDados.KEY_CONTA_SALDO)));
-                Log.d(TAG, "getSaldo: " + conta.getNumero() + " / " + conta.getSaldo());
+                if((conta.getNumero() == contaNumero)) {
+                    break;
+                }
+            }
+            while(cursor.moveToNext());
+        }
+        cursor.close();
+        db.close();
+
+        return conta;
+    }
+
+    public Conta getContaDestino(int contaNumero) {
+        db = bancoDados.getReadableDatabase();
+
+        String query = "SELECT conta FROM conta WHERE conta = " + contaNumero;
+
+        Cursor cursor = db.rawQuery(query, null);
+        Conta conta = new Conta();
+        if(cursor != null && cursor.moveToFirst()) {
+            do {
+                conta.setNumero(cursor.getInt(cursor.getColumnIndex(bancoDados.KEY_CONTA_NUMERO)));
                 if((conta.getNumero() == contaNumero)) {
                     break;
                 }

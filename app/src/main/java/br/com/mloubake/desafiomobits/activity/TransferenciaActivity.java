@@ -105,30 +105,37 @@ public class TransferenciaActivity extends AppCompatActivity {
 
             if(tipo.matches("Normal")) {
                 if(valorTransferido > 0 && valorTransferido < 1000) {
-                    bd.transferencia(contaOrigem, contaDestino, subSaque, addSaque);
-                    saldo = bd.getSaldo(contaOrigem).getSaldo();
-                    float taxa = saldo - 8;
-                    bd.retirar(contaOrigem, taxa);
-                    validarValor();
-                    pegarDataHora();
-                    bd.criarMovimentacao(new Movimentacao(data, horario, valorTransferido,
-                            contaOrigem, contaDestino, "Transferência + Taxa de: R$ " + 8));
-
+                    if(!String.valueOf(bd.getContaDestino(contaDestino).getNumero()).matches(String.valueOf(contaDestino))) {
+                        Toast.makeText(this, "Conta inexistente", Toast.LENGTH_SHORT).show();
+                    } else {
+                        bd.transferencia(contaOrigem, contaDestino, subSaque, addSaque);
+                        saldo = bd.getSaldo(contaOrigem).getSaldo();
+                        float taxa = saldo - 8;
+                        bd.retirar(contaOrigem, taxa);
+                        validarValor();
+                        pegarDataHora();
+                        bd.criarMovimentacao(new Movimentacao(data, horario, valorTransferido,
+                                contaOrigem, contaDestino, "Transferência + Taxa de: R$ " + 8));
+                    }
                 } else {
-                    validarValor();
+                    Toast.makeText(this, "Valor inválido", Toast.LENGTH_SHORT).show();
                 }
             }
             if(tipo.matches("VIP")) {
-                bd.transferencia(contaOrigem, contaDestino, subSaque, addSaque);
-                saldo = bd.getSaldo(contaOrigem).getSaldo();
-                float taxa = (float) (valorTransferido* 0.8/100);
-                float saldoFinal = saldo - taxa;
-                bd.retirar(contaOrigem, saldoFinal);
+                if(!String.valueOf(bd.getContaDestino(contaDestino).getNumero()).matches(String.valueOf(contaDestino))) {
+                    Toast.makeText(this, "Conta inexistente", Toast.LENGTH_SHORT).show();
+                } else {
+                    bd.transferencia(contaOrigem, contaDestino, subSaque, addSaque);
+                    saldo = bd.getSaldo(contaOrigem).getSaldo();
+                    float taxa = (float) (valorTransferido * 0.8 / 100);
+                    float saldoFinal = saldo - taxa;
+                    bd.retirar(contaOrigem, saldoFinal);
 
-                validarValor();
-                pegarDataHora();
-                bd.criarMovimentacao(new Movimentacao(data, horario, valorTransferido,
-                        contaOrigem, contaDestino, "Transferência + Taxa de:" + taxa));
+                    validarValor();
+                    pegarDataHora();
+                    bd.criarMovimentacao(new Movimentacao(data, horario, valorTransferido,
+                            contaOrigem, contaDestino, "Transferência + Taxa de:" + taxa));
+                }
             }
         }
     }

@@ -3,7 +3,6 @@ package br.com.mloubake.desafiomobits.model;
 public class Usuario {
 
     int conta;
-//    Conta conta;
     int senha;
     String tipo;
 

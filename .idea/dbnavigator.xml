@@ -31,7 +31,7 @@
   </component>
   <component name="DBNavigator.Project.DatabaseConsoleManager">
     <connection id="2077d14d-c381-4b33-ab75-0788cd6854d7">
-      <console name="Connection" type="STANDARD" schema="" session="Main">b</console>
+      <console name="Connection" type="STANDARD" schema="main" session="Main"><![CDATA[select * from usuario as u, conta as c  where u.conta = c.conta]]></console>
       <console name="DB Desafio Mobits" type="STANDARD" schema="main" session="Main"><![CDATA[select * from usuario;]]></console>
     </connection>
   </component>

@@ -49,10 +49,10 @@ public class MenuPrincipalActivity extends AppCompatActivity {
     private void recuperandoBundleLogin() {
         Intent intent = getIntent();
         if(intent != null) {
-            conta = getIntent().getExtras().getInt("conta");
+            conta = getIntent().getExtras().getInt("numeroConta");
             senha = getIntent().getExtras().getInt("senha");
             tipo = getIntent().getExtras().getString("tipo");
-            Log.d(TAG, "conta/senha/tipo: " + conta + " / " + senha + " / " + tipo);
+            Log.d(TAG, "numeroConta/senha/tipo: " + conta + " / " + senha + " / " + tipo);
 
             verificarTipoUsuario();
         }
@@ -82,7 +82,7 @@ public class MenuPrincipalActivity extends AppCompatActivity {
             public void onClick(View view) {
                 Intent intent = new Intent(MenuPrincipalActivity.this, SaldoActivity.class);
                 Bundle bundle = new Bundle();
-                bundle.putInt("conta", conta);
+                bundle.putInt("numeroConta", conta);
                 intent.putExtras(bundle);
                 startActivity(intent);
             }
@@ -95,7 +95,7 @@ public class MenuPrincipalActivity extends AppCompatActivity {
             public void onClick(View view) {
                 Intent intent = new Intent(MenuPrincipalActivity.this, ExtratoActivity.class);
                 Bundle bundle = new Bundle();
-                bundle.putInt("conta", conta);
+                bundle.putInt("numeroConta", conta);
                 intent.putExtras(bundle);
                 startActivity(intent);
             }
@@ -108,7 +108,7 @@ public class MenuPrincipalActivity extends AppCompatActivity {
             public void onClick(View view) {
                 Intent intent = new Intent(MenuPrincipalActivity.this, SaqueActivity.class);
                 Bundle bundle = new Bundle();
-                bundle.putInt("conta", conta);
+                bundle.putInt("numeroConta", conta);
                 bundle.putString("tipo", tipo);
                 intent.putExtras(bundle);
                 startActivity(intent);
@@ -122,7 +122,7 @@ public class MenuPrincipalActivity extends AppCompatActivity {
             public void onClick(View view) {
                 Intent intent = new Intent(MenuPrincipalActivity.this, DepositoActivity.class);
                 Bundle bundle = new Bundle();
-                bundle.putInt("conta", conta);
+                bundle.putInt("numeroConta", conta);
                 intent.putExtras(bundle);
                 startActivity(intent);
             }
@@ -135,7 +135,7 @@ public class MenuPrincipalActivity extends AppCompatActivity {
             public void onClick(View view) {
                 Intent intent = new Intent(MenuPrincipalActivity.this, TransferenciaActivity.class);
                 Bundle bundle = new Bundle();
-                bundle.putInt("conta", conta);
+                bundle.putInt("numeroConta", conta);
                 bundle.putString("tipo", tipo);
                 intent.putExtras(bundle);
                 startActivity(intent);
@@ -148,7 +148,11 @@ public class MenuPrincipalActivity extends AppCompatActivity {
         btnSolicitarGerente.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                startActivity(new Intent(MenuPrincipalActivity.this, SolicitarGerenteActivity.class));
+                Intent intent = new Intent(MenuPrincipalActivity.this, SolicitarGerenteActivity.class);
+                Bundle bundle = new Bundle();
+                bundle.putInt("numeroConta", conta);
+                intent.putExtras(bundle);
+                startActivity(intent);
             }
         });
     }

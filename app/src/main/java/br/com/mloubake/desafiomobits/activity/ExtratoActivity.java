@@ -6,8 +6,6 @@ import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 
-import java.time.LocalDate;
-import java.time.LocalTime;
 import java.util.ArrayList;
 
 import br.com.mloubake.desafiomobits.R;
@@ -20,7 +18,8 @@ public class ExtratoActivity extends AppCompatActivity {
     RecyclerView mRecyclerView;
     MovimentacaoAdapter mAdapter;
     ArrayList<Movimentacao> mMovLista;
-    BDFuncoes bd;
+
+    BDFuncoes bdFuncoes;
 
     int conta;
     @Override
@@ -30,13 +29,13 @@ public class ExtratoActivity extends AppCompatActivity {
 
         getBundleMenu();
 
-        bd = new BDFuncoes(getBaseContext());
+        bdFuncoes = new BDFuncoes(getBaseContext());
     }
 
     private void getBundleMenu() {
         Intent intent = getIntent();
         if(intent != null) {
-            conta = getIntent().getExtras().getInt("conta");
+            conta = getIntent().getExtras().getInt("numeroConta");
         }
     }
 
@@ -62,23 +61,23 @@ public class ExtratoActivity extends AppCompatActivity {
 
         for(int i=0; i<2; i++) {
 //            Movimentacao mov1 = new Movimentacao("DIA 1","HORA 2",3f,4,5,"teste6");
-//            mMovLista.add(bd.getMovimentacao(conta).getContaOrigem());
+//            mMovLista.add(bdFuncoes.getMovimentacao(numeroConta).getContaOrigem());
 
 
 
-//            Movimentacao movimentacao = new Movimentacao(bd.getMovimentacao(conta).getData(),
-//                    bd.getMovimentacao(conta).getHorario(),
-//                    bd.getMovimentacao(conta).getValor(),
-//                    bd.getMovimentacao(conta).getContaOrigem(),
-//                    bd.getMovimentacao(conta).getContaDestino(),
-//                    bd.getMovimentacao(conta).getTipoMov());
+//            Movimentacao movimentacao = new Movimentacao(bdFuncoes.getMovimentacao(numeroConta).getData(),
+//                    bdFuncoes.getMovimentacao(numeroConta).getHorario(),
+//                    bdFuncoes.getMovimentacao(numeroConta).getValor(),
+//                    bdFuncoes.getMovimentacao(numeroConta).getContaOrigem(),
+//                    bdFuncoes.getMovimentacao(numeroConta).recuperarContaDestino(),
+//                    bdFuncoes.getMovimentacao(numeroConta).getTipoMov());
 
-//            movimentacao.setData(bd.getMovimentacao(conta).getData());
-//            movimentacao.setHorario(bd.getMovimentacao(conta).getHorario());
-//            movimentacao.setValor(bd.getMovimentacao(conta).getValor());
-//            movimentacao.setContaOrigem(bd.getMovimentacao(conta).getContaOrigem());
-//            movimentacao.setContaDestino(bd.getMovimentacao(conta).getContaDestino());
-//            movimentacao.setTipoMov(bd.getMovimentacao(conta).getTipoMov());
+//            movimentacao.setData(bdFuncoes.getMovimentacao(numeroConta).getData());
+//            movimentacao.setHorario(bdFuncoes.getMovimentacao(numeroConta).getHorario());
+//            movimentacao.setValor(bdFuncoes.getMovimentacao(numeroConta).getValor());
+//            movimentacao.setContaOrigem(bdFuncoes.getMovimentacao(numeroConta).getContaOrigem());
+//            movimentacao.setContaDestino(bdFuncoes.getMovimentacao(numeroConta).recuperarContaDestino());
+//            movimentacao.setTipoMov(bdFuncoes.getMovimentacao(numeroConta).getTipoMov());
 
 //            mMovLista.add(movimentacao);
         }

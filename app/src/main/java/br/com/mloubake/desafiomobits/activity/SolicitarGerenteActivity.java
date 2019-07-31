@@ -3,49 +3,44 @@ package br.com.mloubake.desafiomobits.activity;
 import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.View;
 import android.widget.Button;
-
-import java.time.LocalDate;
-import java.time.LocalTime;
+import android.widget.Toast;
 
 import br.com.mloubake.desafiomobits.R;
 import br.com.mloubake.desafiomobits.database.BDFuncoes;
 import br.com.mloubake.desafiomobits.model.Movimentacao;
+import br.com.mloubake.desafiomobits.utils.DateUtils;
 
 public class SolicitarGerenteActivity extends AppCompatActivity {
 
     private static final String TAG = "";
     Button btnSolicitarGerente;
 
-    String data;
-    String horario;
-
     int conta;
 
-    BDFuncoes bd;
+    BDFuncoes bdFuncoes;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_solicitar_gerente);
 
-        getBundleMenu();
         setupIds();
+        getBundleMenu();
 
-        bd = new BDFuncoes(getBaseContext());
+        bdFuncoes = new BDFuncoes(getBaseContext());
     }
 
     private void getBundleMenu() {
         Intent intent = getIntent();
         if(intent != null) {
-            conta = getIntent().getExtras().getInt("conta");
+            conta = getIntent().getExtras().getInt("numeroConta");
         }
     }
 
     private void setupIds() {
-        btnSolicitarGerente = findViewById(R.id.btnSolicitarGerente);
+        btnSolicitarGerente = findViewById(R.id.btnSolicitar);
     }
 
     @Override
@@ -58,27 +53,21 @@ public class SolicitarGerenteActivity extends AppCompatActivity {
         btnSolicitarGerente.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                solicitcao();
+                solicitacao();
             }
         });
     }
 
-    private void solicitcao() {
-        float saldo = bd.getSaldo(conta).getSaldo();
-        float valorGerente = 50f;
+    private void solicitacao() {
+        float saldo = bdFuncoes.recuperarSaldo(conta).getSaldo();
+        float valorGerente = 50.00f;
 
-        float subSaldo = saldo - valorGerente;
-        bd.retirar(conta, subSaldo);
+        saldo -= valorGerente;
+        bdFuncoes.alterarSaldo(conta, saldo);
 
-        bd.criarMovimentacao(new Movimentacao(data, horario, valorGerente, conta, conta,"Solicitação do Gerente"));
+        Toast.makeText(this, "Gerente Solicitado", Toast.LENGTH_SHORT).show();
+        bdFuncoes.registrarMovimentacao(new Movimentacao(DateUtils.pegarData(), DateUtils.pegarHorario(), valorGerente,
+                conta,"Solicitação do Gerente" ));
     }
 
-    public void pegarDataHora() {
-        //TODO Ver se há como pegar a hora/data da internet
-        if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.O) {
-            data = String.valueOf(LocalDate.now());
-            horario = String.valueOf(LocalTime.now());
-            Log.d(TAG, "DATA/HORA: " + data + " / " + horario);
-        }
-    }
 }

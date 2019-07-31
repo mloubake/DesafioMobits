@@ -17,16 +17,16 @@ public class BancoDados extends SQLiteOpenHelper {
     protected static final String TABELA_CONTA = "conta";
     protected static final String TABELA_MOVIMENTACAO = "movimentacao";
     //Usuário
-    protected static final String KEY_USUARIO_ID = "_id";
+    protected static final String KEY_USUARIO_ID = "_idUsuario";
     protected static final String KEY_USUARIO_CONTA = "conta";
     protected static final String KEY_USUARIO_SENHA = "senha";
     protected static final String KEY_USUARIO_TIPO = "tipo";
     //Conta
-    protected static final String KEY_CONTA_ID = "_contaId";
+    protected static final String KEY_CONTA_ID = "_idConta";
     protected static final String KEY_CONTA_NUMERO = "conta";
     protected static final String KEY_CONTA_SALDO = "saldo";
     //Movimentação
-    protected static final String KEY_MOV_ID = "_id";
+    protected static final String KEY_MOV_ID = "_idMovimentacao";
     protected static final String KEY_MOV_DATA = "data";
     protected static final String KEY_MOV_HORARIO = "horario";
     protected static final String KEY_MOV_VALOR = "valor";

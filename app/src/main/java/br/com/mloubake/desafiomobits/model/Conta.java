@@ -1,10 +1,13 @@
 package br.com.mloubake.desafiomobits.model;
 
+import java.util.Date;
+
 public class Conta {
 
     int numero;
     float saldo;
     Movimentacao movimentacao;
+    Date dataSaldoNegativo;
 
     public Conta() {
     }
@@ -41,5 +44,10 @@ public class Conta {
         this.movimentacao = movimentacao;
     }
 
-
+    public Date getDataSaldoNegativo() {
+        return dataSaldoNegativo;
+    }
+    public void setDataSaldoNegativo(Date dataSaldoNegativo) {
+        this.dataSaldoNegativo = dataSaldoNegativo;
+    }
 }

@@ -1,33 +1,33 @@
 package br.com.mloubake.desafiomobits.activity;
 
 import android.content.Intent;
-import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.support.v7.app.AppCompatActivity;
 import android.text.TextUtils;
-import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
 
-import java.time.LocalDate;
-import java.time.LocalTime;
+import java.text.NumberFormat;
 
 import br.com.mloubake.desafiomobits.R;
 import br.com.mloubake.desafiomobits.database.BDFuncoes;
 import br.com.mloubake.desafiomobits.model.Movimentacao;
+import br.com.mloubake.desafiomobits.utils.DateUtils;
+import br.com.mloubake.desafiomobits.utils.TextoUtils;
 
 public class TransferenciaActivity extends AppCompatActivity {
 
     private static final String TAG = "";
+    private static final float TAXA_CONTA_NORMAL = 8f;
+    private static final float TAXA_CONTA_VIP = 0.8f;
 
     EditText etContaDestino;
     EditText etValor;
     Button btnTransferir;
 
-    String data;
-    String horario;
-    BDFuncoes bd;
+    BDFuncoes bdFuncoes;
 
     float valorTransferido;
     int contaOrigem;
@@ -42,13 +42,13 @@ public class TransferenciaActivity extends AppCompatActivity {
         getBundleMenu();
         setupIds();
 
-        bd = new BDFuncoes(getBaseContext());
+        bdFuncoes = new BDFuncoes(getBaseContext());
     }
 
     private void getBundleMenu() {
         Intent intent = getIntent();
         if(intent != null) {
-            contaOrigem = getIntent().getExtras().getInt("conta");
+            contaOrigem = getIntent().getExtras().getInt("numeroConta");
             tipo = getIntent().getExtras().getString("tipo");
         }
     }
@@ -83,58 +83,57 @@ public class TransferenciaActivity extends AppCompatActivity {
         if(!TextUtils.isEmpty(etValor.getText())){
             valorTransferido = Float.parseFloat(etValor.getText().toString());
         }
-//        validarCampoVazio();
 
         if(etContaDestino.getText().length() < 5) {
             Toast.makeText(this, "Conta Corrente deve conter 5 digitos", Toast.LENGTH_SHORT).show();
             return;
         }
         if(etValor.getText().length() == 0) {
-            Toast.makeText(this, "Valor inválido", Toast.LENGTH_SHORT).show();
+            Toast.makeText(this, "Valor deve conter um número válido", Toast.LENGTH_SHORT).show();
             return;
         }
 
         if(etContaDestino.getText().toString().equals(String.valueOf(contaOrigem))) {
-            Toast.makeText(this, "Conta Corrente inválida, por favor, verifique, a conta digitada",
+            Toast.makeText(this, "Conta Corrente inválida, por favor, verifique, o número da conta digitado",
                     Toast.LENGTH_SHORT).show();
         } else {
-            float saldo = bd.getSaldo(contaOrigem).getSaldo();
+            float saldo = bdFuncoes.recuperarSaldo(contaOrigem).getSaldo();
             float subSaque = saldo - valorTransferido;
-            float saldoInicialDeposito = bd.getSaldo(contaDestino).getSaldo();
+            float saldoInicialDeposito = bdFuncoes.recuperarSaldo(contaDestino).getSaldo();
             float addSaque = saldoInicialDeposito + valorTransferido;
 
             if(tipo.matches("Normal")) {
                 if(valorTransferido > 0 && valorTransferido < 1000) {
-                    if(!String.valueOf(bd.getContaDestino(contaDestino).getNumero()).matches(String.valueOf(contaDestino))) {
+                    if(!String.valueOf(bdFuncoes.recuperarContaDestino(contaDestino).getNumero()).matches(String.valueOf(contaDestino))) {
                         Toast.makeText(this, "Conta inexistente", Toast.LENGTH_SHORT).show();
                     } else {
-                        bd.transferencia(contaOrigem, contaDestino, subSaque, addSaque);
-                        saldo = bd.getSaldo(contaOrigem).getSaldo();
+                        bdFuncoes.transferencia(contaOrigem, contaDestino, subSaque, addSaque);
+                        saldo = bdFuncoes.recuperarSaldo(contaOrigem).getSaldo();
                         float taxa = saldo - 8;
-                        bd.retirar(contaOrigem, taxa);
+                        bdFuncoes.alterarSaldo(contaOrigem, taxa);
                         validarValor();
-                        pegarDataHora();
-                        bd.criarMovimentacao(new Movimentacao(data, horario, valorTransferido,
-                                contaOrigem, contaDestino, "Transferência + Taxa de: R$ " + 8));
+                        bdFuncoes.registrarMovimentacao(new Movimentacao(DateUtils.pegarData(), DateUtils.pegarHorario(), valorTransferido,
+                                contaOrigem, contaDestino, "Transferência + Taxa de: R$ " + TextoUtils.formatarDuasCasasDecimais(TAXA_CONTA_NORMAL)));
+
+                        NumberFormat aaa = NumberFormat.getCurrencyInstance();
                     }
                 } else {
                     Toast.makeText(this, "Valor inválido", Toast.LENGTH_SHORT).show();
                 }
             }
             if(tipo.matches("VIP")) {
-                if(!String.valueOf(bd.getContaDestino(contaDestino).getNumero()).matches(String.valueOf(contaDestino))) {
+                if(!String.valueOf(bdFuncoes.recuperarContaDestino(contaDestino).getNumero()).matches(String.valueOf(contaDestino))) {
                     Toast.makeText(this, "Conta inexistente", Toast.LENGTH_SHORT).show();
                 } else {
-                    bd.transferencia(contaOrigem, contaDestino, subSaque, addSaque);
-                    saldo = bd.getSaldo(contaOrigem).getSaldo();
-                    float taxa = (float) (valorTransferido * 0.8 / 100);
+                    bdFuncoes.transferencia(contaOrigem, contaDestino, subSaque, addSaque);
+                    saldo = bdFuncoes.recuperarSaldo(contaOrigem).getSaldo();
+                    float taxa = valorTransferido * TAXA_CONTA_VIP / 100;
                     float saldoFinal = saldo - taxa;
-                    bd.retirar(contaOrigem, saldoFinal);
+                    bdFuncoes.alterarSaldo(contaOrigem, saldoFinal);
 
                     validarValor();
-                    pegarDataHora();
-                    bd.criarMovimentacao(new Movimentacao(data, horario, valorTransferido,
-                            contaOrigem, contaDestino, "Transferência + Taxa de:" + taxa));
+                    bdFuncoes.registrarMovimentacao(new Movimentacao(DateUtils.pegarData(), DateUtils.pegarHorario(), valorTransferido,
+                            contaOrigem, contaDestino, "Transferência + Taxa de: R$ " + TextoUtils.formatarDuasCasasDecimais(taxa)));
                 }
             }
         }
@@ -142,18 +141,10 @@ public class TransferenciaActivity extends AppCompatActivity {
 
     public void validarValor() {
         if(valorTransferido > 0) {
-            Toast.makeText(TransferenciaActivity.this, "Transferência Efetuada: R$" + valorTransferido, Toast.LENGTH_SHORT).show();
+            Toast.makeText(TransferenciaActivity.this, "Transferência Efetuada: R$ " + valorTransferido, Toast.LENGTH_SHORT).show();
         }
         else {
             Toast.makeText(TransferenciaActivity.this, "Transferência inválida, por favor, verifique o valor", Toast.LENGTH_SHORT).show();
-        }
-    }
-    public void pegarDataHora() {
-        //TODO Ver se há como pegar a hora/data da internet
-        if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.O) {
-            data = String.valueOf(LocalDate.now());
-            horario = String.valueOf(LocalTime.now());
-            Log.d(TAG, "DATA/HORA: " + data + " / " + horario);
         }
     }
 }

@@ -4,11 +4,8 @@ import android.content.ContentValues;
 import android.content.Context;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
-import android.os.Build;
 import android.util.Log;
 
-import java.time.LocalDate;
-import java.time.LocalTime;
 import java.util.ArrayList;
 
 import br.com.mloubake.desafiomobits.model.Conta;
@@ -24,13 +21,28 @@ public class BDFuncoes {
     private BancoDados bancoDados;
 
     ContentValues valores;
-    long resultado;
 
     public BDFuncoes(Context context) {
         bancoDados = new BancoDados(context);
     }
 
     //Popular Tabela Usuario (Executar somente 1 vez)
+    public boolean checkarPopulacaoBD() {
+        db = bancoDados.getReadableDatabase();
+
+        String query = "Select * from usuario,conta";
+        Cursor cursor = db.rawQuery(query, null);
+
+        boolean checkTabela;
+        if((cursor != null) && (cursor.getCount()>0)) {
+            checkTabela = false;
+            return checkTabela;
+        } else {
+            checkTabela = true;
+            return checkTabela;
+        }
+    }
+
     public void popularUsuario(Usuario usuario) {
         db = bancoDados.getWritableDatabase();
         valores = new ContentValues();
@@ -84,7 +96,7 @@ public class BDFuncoes {
         return usuario;
     }
 
-    public Conta getSaldo(int contaNumero) {
+    public Conta recuperarSaldo(int contaNumero) {
         db = bancoDados.getReadableDatabase();
 
         String query = "SELECT saldo FROM conta WHERE conta = " + contaNumero;
@@ -106,7 +118,7 @@ public class BDFuncoes {
         return conta;
     }
 
-    public Conta getContaDestino(int contaNumero) {
+    public Conta recuperarContaDestino(int contaNumero) {
         db = bancoDados.getReadableDatabase();
 
         String query = "SELECT conta FROM conta WHERE conta = " + contaNumero;
@@ -128,19 +140,19 @@ public class BDFuncoes {
         return conta;
     }
 
-    public void conceder(int conta, float valor) {
-        db = bancoDados.getWritableDatabase();
-        valores = new ContentValues();
-        valores.put(bancoDados.KEY_CONTA_SALDO, valor);
+//    public void incluirSaldo(int conta, float valor) {
+//        db = bancoDados.getWritableDatabase();
+//        valores = new ContentValues();
+//        valores.put(bancoDados.KEY_CONTA_SALDO, valor);
+//
+//        db.update(bancoDados.TABELA_CONTA,
+//                valores,
+//                bancoDados.KEY_CONTA_NUMERO + "= ?",
+//                new String[]{String.valueOf(conta)});
+//        db.close();
+//    }
 
-        db.update(bancoDados.TABELA_CONTA,
-                valores,
-                bancoDados.KEY_CONTA_NUMERO + "= ?",
-                new String[]{String.valueOf(conta)});
-        db.close();
-    }
-
-    public void retirar(int conta, float valor) {
+    public void alterarSaldo(int conta, float valor) {
         db = bancoDados.getWritableDatabase();
         valores = new ContentValues();
         valores.put(bancoDados.KEY_CONTA_SALDO, valor);
@@ -153,11 +165,12 @@ public class BDFuncoes {
     }
 
     public void transferencia(int contaOrigem, int contaDestino, float subSaldo, float addSaldo) {
-        retirar(contaOrigem, subSaldo);
-        conceder(contaDestino, addSaldo);
+        alterarSaldo(contaOrigem, subSaldo);
+//        incluirSaldo(contaDestino, addSaldo);
+        alterarSaldo(contaDestino, addSaldo);
     }
 
-    public void criarMovimentacao(Movimentacao movimentacao) {
+    public void registrarMovimentacao(Movimentacao movimentacao) {
         db = bancoDados.getWritableDatabase();
 
         valores = new ContentValues();

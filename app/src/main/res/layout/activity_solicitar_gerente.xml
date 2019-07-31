@@ -28,6 +28,7 @@
         android:layout_height="wrap_content"
         android:text="Será cobrada uma taxa de R$50.00 pela visita do Gerente"/>
     <Button
+        android:id="@+id/btnSolicitar"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="Confirmar"/>

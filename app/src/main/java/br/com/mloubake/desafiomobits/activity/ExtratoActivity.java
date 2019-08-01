@@ -5,9 +5,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
-
 import java.util.ArrayList;
-
 import br.com.mloubake.desafiomobits.R;
 import br.com.mloubake.desafiomobits.adapter.MovimentacaoAdapter;
 import br.com.mloubake.desafiomobits.database.BDFuncoes;

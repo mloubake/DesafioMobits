@@ -8,7 +8,6 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
-
 import br.com.mloubake.desafiomobits.R;
 import br.com.mloubake.desafiomobits.database.BDFuncoes;
 import br.com.mloubake.desafiomobits.model.Movimentacao;
@@ -17,11 +16,6 @@ import br.com.mloubake.desafiomobits.utils.JurosUtils;
 import br.com.mloubake.desafiomobits.utils.TextoUtils;
 
 public class DepositoActivity extends AppCompatActivity {
-    private static final String TAG = "";
-
-    //todo usar substituir os toasts por alertdialog (fazer por último)
-    //todo ver casa decimal formatada para 2 dígitos
-    //todo tirar hard coded
 
     EditText etDeposito;
     Button btnDepositar;
@@ -31,7 +25,6 @@ public class DepositoActivity extends AppCompatActivity {
     float valorDepositado;
     int numeroConta;
     float saldo;
-    float saldoAtualizado;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {

@@ -1,8 +1,5 @@
 package br.com.mloubake.desafiomobits.model;
 
-import java.time.LocalDate;
-import java.time.LocalTime;
-
 public class Movimentacao {
 
     String data;

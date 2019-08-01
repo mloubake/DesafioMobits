@@ -13,7 +13,9 @@ public class JurosUtils {
         long horarioDif = ((horarioFinal/1000/60) - (horarioInicial/1000/60));
         float montante = (float) (saldo * (Math.pow((1 + TAXA_COMPOSTA), horarioDif)));
 
-        //TODO Colocar a formula do calc do juros composto como comentário
+//        Foi utilizada a fórmula de Juros Composto
+//        Montante = Principal * (1 + taxa) ^ prazo
+
         return montante;
     }
 

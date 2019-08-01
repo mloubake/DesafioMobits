@@ -3,15 +3,12 @@ package br.com.mloubake.desafiomobits.database;
 import android.content.Context;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
-import android.util.Log;
 
 public class BancoDados extends SQLiteOpenHelper {
-    //todo NA VERSÃO FINAL, TIRAR TODOS OS COMENTÁRIOS E TODOs QUE NÃO AJUDAM EM NADA DE TODAS AS TELAS
 
-    private static final String TAG = "";
-    //BD Nome e Versão
     private static final String NOME_BD = "bd.desafio";
     private static final int VERSAO_BD = 3;
+
     //Tabelas
     protected static final String TABELA_USUARIO = "usuario";
     protected static final String TABELA_CONTA = "conta";
@@ -39,10 +36,8 @@ public class BancoDados extends SQLiteOpenHelper {
         super(context, NOME_BD,null, VERSAO_BD);
     }
 
-    //Cria Tabelas
     @Override
     public void onCreate(SQLiteDatabase bd) {
-        //Tabela Usuario
         String tabelaUsuario = "CREATE TABLE " + TABELA_USUARIO + " ("
                 + COL_USUARIO_ID + " integer primary key autoincrement,"
                 + COL_USUARIO_CONTA + " integer,"
@@ -50,7 +45,6 @@ public class BancoDados extends SQLiteOpenHelper {
                 + COL_USUARIO_TIPO + " varchar(6)"
                 + ")";
 
-        //Tabela Conta
         String tabelaConta = "CREATE TABLE " + TABELA_CONTA + " ("
                 + COL_CONTA_ID + " integer primary key autoincrement,"
                 + COL_CONTA_NUMERO + " integer,"
@@ -58,7 +52,6 @@ public class BancoDados extends SQLiteOpenHelper {
                 + COL_CONTA_DATA_SALDO_NEGATIVO + " long"
                 + ")";
 
-        //Tabela Movimentação
         String tabelaMovimentacao = "CREATE TABLE " + TABELA_MOVIMENTACAO + " ("
                 + COL_MOV_ID + " integer primary key autoincrement,"
                 + COL_MOV_DATA + " string,"
@@ -74,15 +67,12 @@ public class BancoDados extends SQLiteOpenHelper {
         bd.execSQL(tabelaMovimentacao);
     }
 
-    //Atualiza BD
     @Override
     public void onUpgrade(SQLiteDatabase bd, int arg1, int arg2) {
-        //Dropa as tabelas atuais
         bd.execSQL("DROP TABLE IF EXISTS '" + TABELA_USUARIO + "'");
         bd.execSQL("DROP TABLE IF EXISTS '" + TABELA_CONTA +"'");
         bd.execSQL("DROP TABLE IF EXISTS '" + TABELA_MOVIMENTACAO + "'");
-        //Cria BD com nova versão
+
         onCreate(bd);
-        Log.d(TAG, "novaVersão: " + bd.getVersion());
     }
 }

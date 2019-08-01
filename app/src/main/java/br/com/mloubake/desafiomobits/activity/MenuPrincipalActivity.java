@@ -7,12 +7,9 @@ import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.Toast;
-
 import br.com.mloubake.desafiomobits.R;
 
 public class MenuPrincipalActivity extends AppCompatActivity {
-
-    private static final String TAG = "";
 
     Button btnSaldo;
     Button btnExtrato;
@@ -42,8 +39,6 @@ public class MenuPrincipalActivity extends AppCompatActivity {
         trocarUsuario();
 
         recuperandoBundleLogin();
-
-
     }
 
     private void recuperandoBundleLogin() {
@@ -52,7 +47,6 @@ public class MenuPrincipalActivity extends AppCompatActivity {
             conta = getIntent().getExtras().getInt("numeroConta");
             senha = getIntent().getExtras().getInt("senha");
             tipo = getIntent().getExtras().getString("tipo");
-            Log.d(TAG, "numeroConta/senha/tipo: " + conta + " / " + senha + " / " + tipo);
 
             verificarTipoUsuario();
         }
@@ -64,7 +58,6 @@ public class MenuPrincipalActivity extends AppCompatActivity {
         }
     }
 
-    //Seta as ids de cada botão
     private void setarIds() {
         btnSaldo = findViewById(R.id.btnSaldo);
         btnExtrato = findViewById(R.id.btnExtrato);
@@ -75,7 +68,6 @@ public class MenuPrincipalActivity extends AppCompatActivity {
         btnTrocarUsuario = findViewById(R.id.btnTrocarUsuario);
     }
 
-    //Iniciar Activity Saldo
     private void verificarSaldo() {
         btnSaldo.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -88,7 +80,7 @@ public class MenuPrincipalActivity extends AppCompatActivity {
             }
         });
     }
-    //Iniciar Activity Extrato
+
     private void verificarExtrato() {
         btnExtrato.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -101,7 +93,7 @@ public class MenuPrincipalActivity extends AppCompatActivity {
             }
         });
     }
-    //Iniciar Activity Saque
+
     private void sacar() {
         btnSaque.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -115,7 +107,7 @@ public class MenuPrincipalActivity extends AppCompatActivity {
             }
         });
     }
-    //Iniciar Activity Depósito
+
     private void depositar() {
         btnDeposito.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -128,7 +120,7 @@ public class MenuPrincipalActivity extends AppCompatActivity {
             }
         });
     }
-    //Iniciar Activity Transferência
+
     private void transfererir() {
         btnTransferencia.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -142,8 +134,7 @@ public class MenuPrincipalActivity extends AppCompatActivity {
             }
         });
     }
-    //Iniciar Activity SolicitarGerente
-    //todo ver o estado de visibilidade GONE
+
     private void solicitarGerente() {
         btnSolicitarGerente.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -156,7 +147,7 @@ public class MenuPrincipalActivity extends AppCompatActivity {
             }
         });
     }
-    //Iniciar Troca de Usuário
+
     private void trocarUsuario() {
         btnTrocarUsuario.setOnClickListener(new View.OnClickListener() {
             @Override

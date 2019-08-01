@@ -28,7 +28,7 @@
             android:paddingLeft="8dp"
             android:paddingRight="8dp"
             android:textStyle="bold|italic"
-            android:inputType="number"
+            android:inputType="numberPassword"
             android:maxLength="5"/>
         <EditText
             android:id="@+id/etContaSenha"

@@ -8,7 +8,6 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
-
 import br.com.mloubake.desafiomobits.R;
 import br.com.mloubake.desafiomobits.database.BDFuncoes;
 import br.com.mloubake.desafiomobits.model.Movimentacao;
@@ -17,7 +16,6 @@ import br.com.mloubake.desafiomobits.utils.TextoUtils;
 
 public class TransferenciaActivity extends AppCompatActivity {
 
-    private static final String TAG = "";
     private static final float TAXA_CONTA_NORMAL = 8f;
     private static final float TAXA_CONTA_VIP = 0.8f;
 
@@ -107,8 +105,6 @@ public class TransferenciaActivity extends AppCompatActivity {
                     } else {
 
                         bdFuncoes.transferirSaldo(contaOrigem, contaDestino, subSaque, addSaque);
-                        float saldoContaDestino = bdFuncoes.recuperarConta(contaDestino).getSaldo();
-//                        if()
 
                         saldoContaOrigem = bdFuncoes.recuperarConta(contaOrigem).getSaldo();
                         float saldoTaxado = saldoContaOrigem - 8;

@@ -6,7 +6,6 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 import android.widget.Toast;
-
 import br.com.mloubake.desafiomobits.R;
 import br.com.mloubake.desafiomobits.database.BDFuncoes;
 import br.com.mloubake.desafiomobits.model.Movimentacao;
@@ -14,7 +13,6 @@ import br.com.mloubake.desafiomobits.utils.DateUtils;
 
 public class SolicitarGerenteActivity extends AppCompatActivity {
 
-    private static final String TAG = "";
     Button btnSolicitarGerente;
 
     int conta;
@@ -69,5 +67,4 @@ public class SolicitarGerenteActivity extends AppCompatActivity {
         bdFuncoes.registrarMovimentacao(new Movimentacao(DateUtils.pegarData(), DateUtils.pegarHorario(), valorGerente,
                 conta,"Solicitação do Gerente" ));
     }
-
 }

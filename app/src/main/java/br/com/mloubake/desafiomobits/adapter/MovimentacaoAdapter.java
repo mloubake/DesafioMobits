@@ -1,19 +1,14 @@
 package br.com.mloubake.desafiomobits.adapter;
 
 import android.content.Context;
-import android.graphics.Color;
-import android.support.v7.widget.CardView;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.LinearLayout;
 import android.widget.TextView;
-
 import java.util.ArrayList;
-
 import br.com.mloubake.desafiomobits.R;
-import br.com.mloubake.desafiomobits.database.BDFuncoes;
 import br.com.mloubake.desafiomobits.model.Movimentacao;
 import br.com.mloubake.desafiomobits.utils.TextoUtils;
 
@@ -62,8 +57,6 @@ public class MovimentacaoAdapter extends RecyclerView.Adapter<RecyclerView.ViewH
         if(mMovList.get(position).getContaDestino() != mConta) {
             ((MovimentacaoViewHolder) myViewHolder).txtContaOrigem.setText("Minha Conta");
         }
-
-
     }
 
     @Override

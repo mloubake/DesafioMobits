@@ -9,9 +9,6 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
-
-import java.util.Date;
-
 import br.com.mloubake.desafiomobits.R;
 import br.com.mloubake.desafiomobits.database.BDFuncoes;
 import br.com.mloubake.desafiomobits.model.Movimentacao;
@@ -20,8 +17,6 @@ import br.com.mloubake.desafiomobits.utils.JurosUtils;
 import br.com.mloubake.desafiomobits.utils.TextoUtils;
 
 public class SaqueActivity extends AppCompatActivity {
-
-    private static final String TAG = "";
 
     EditText etSaque;
     Button btnSacar;
@@ -109,7 +104,6 @@ public class SaqueActivity extends AppCompatActivity {
         }
     }
 
-    //TODO Verificar este método
     private void validarValor() {
         if(valorSacado > 0) {
             Toast.makeText(SaqueActivity.this, "Saque Efetuado: R$" + TextoUtils.formatarDuasCasasDecimais(valorSacado), Toast.LENGTH_SHORT).show();

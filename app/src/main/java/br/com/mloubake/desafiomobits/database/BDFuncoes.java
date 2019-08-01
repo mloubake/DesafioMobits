@@ -5,15 +5,12 @@ import android.content.Context;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.util.Log;
-
 import java.util.ArrayList;
-
 import br.com.mloubake.desafiomobits.model.Conta;
 import br.com.mloubake.desafiomobits.model.Movimentacao;
 import br.com.mloubake.desafiomobits.model.Usuario;
 
 public class BDFuncoes {
-    //TODO fazer lista de tarefas do que falta
 
     private SQLiteDatabase db;
     private BancoDados bancoDados;
@@ -39,6 +36,7 @@ public class BDFuncoes {
             return checkTabela;
         }
     }
+
     public void popularUsuario(Usuario usuario) {
         db = bancoDados.getWritableDatabase();
         valores = new ContentValues();
@@ -50,6 +48,7 @@ public class BDFuncoes {
                 valores);
         db.close();
     }
+
     public void popularConta(Conta conta) {
         db = bancoDados.getWritableDatabase();
         valores = new ContentValues();

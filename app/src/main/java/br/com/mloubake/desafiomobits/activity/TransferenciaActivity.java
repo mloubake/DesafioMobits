@@ -79,17 +79,34 @@ public class TransferenciaActivity extends AppCompatActivity {
         if(!TextUtils.isEmpty(etValor.getText())){
             valorTransferido = Float.parseFloat(etValor.getText().toString());
         }
+
         if(etContaDestino.getText().length() < 5) {
             Toast.makeText(this, "Conta Corrente deve conter 5 digitos", Toast.LENGTH_SHORT).show();
             return;
         }
-        if(etValor.getText().length() == 0) {
+        if(etValor.getText().length() == 0 || Float.parseFloat(etValor.getText().toString()) == 0f) {
             Toast.makeText(this, "Valor deve conter um número válido", Toast.LENGTH_SHORT).show();
             return;
         }
 
+        boolean contaEncontrada = false;
+
+        for(int i = 0; i < bdFuncoes.getContas().size(); i++) {
+            String numeroConta = String.valueOf(bdFuncoes.getContas().get(i).getNumero());
+            if(etContaDestino.getText().toString().equals(numeroConta)) {
+                contaEncontrada = true;
+                validaTransferencia();
+                break;
+            }
+        }
+        if(!contaEncontrada) {
+            Toast.makeText(this, "Conta Inexistente", Toast.LENGTH_SHORT).show();
+        }
+    }
+
+    public void validaTransferencia() {
         if(etContaDestino.getText().toString().equals(String.valueOf(contaOrigem))) {
-            Toast.makeText(this, "Conta Corrente inválida, por favor, verifique o número da numeroConta digitado",
+            Toast.makeText(this, "Conta Corrente inválida, por favor, verifique o número da conta digitada",
                     Toast.LENGTH_SHORT).show();
         } else {
             float saldoContaOrigem = bdFuncoes.recuperarConta(contaOrigem).getSaldo();
@@ -99,11 +116,9 @@ public class TransferenciaActivity extends AppCompatActivity {
 
             if(tipo.matches("Normal")) {
                 if(valorTransferido > 0 && valorTransferido <= 1000) {
-                    if(!String.valueOf(bdFuncoes.recuperarContaDestino(contaDestino).getNumero()).matches(String.valueOf(contaDestino))) {
-
+                    if(!String.valueOf(bdFuncoes.recuperarConta(contaDestino).getNumero()).matches(String.valueOf(contaDestino))) {
                         Toast.makeText(this, "Conta inexistente", Toast.LENGTH_SHORT).show();
                     } else {
-
                         bdFuncoes.transferirSaldo(contaOrigem, contaDestino, subSaque, addSaque);
 
                         saldoContaOrigem = bdFuncoes.recuperarConta(contaOrigem).getSaldo();
@@ -118,7 +133,7 @@ public class TransferenciaActivity extends AppCompatActivity {
                 }
             }
             if(tipo.matches("VIP")) {
-                if(!String.valueOf(bdFuncoes.recuperarContaDestino(contaDestino).getNumero()).matches(String.valueOf(contaDestino))) {
+                if(!String.valueOf(bdFuncoes.recuperarConta(contaDestino).getNumero()).matches(String.valueOf(contaDestino))) {
                     Toast.makeText(this, "Conta inexistente", Toast.LENGTH_SHORT).show();
                 } else {
                     bdFuncoes.transferirSaldo(contaOrigem, contaDestino, subSaque, addSaque);

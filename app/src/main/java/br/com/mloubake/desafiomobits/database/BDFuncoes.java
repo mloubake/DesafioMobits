@@ -90,15 +90,39 @@ public class BDFuncoes {
         return usuario;
     }
 
+    public ArrayList<Conta> getContas () {
+        db = bancoDados.getReadableDatabase();
+
+        String query = "SELECT * FROM conta";
+
+        Cursor cursor = db.rawQuery(query, null);
+
+        ArrayList<Conta> arrayListConta = new ArrayList<>();
+
+        if(cursor != null && cursor.moveToFirst()) {
+            do {
+                int contaNumero = cursor.getInt(cursor.getColumnIndex(bancoDados.COL_CONTA_NUMERO));
+                float saldo = cursor.getFloat(cursor.getColumnIndex(bancoDados.COL_CONTA_SALDO));
+                arrayListConta.add(new Conta(contaNumero, saldo));
+            }
+            while (cursor.moveToNext());
+        }
+        cursor.close();
+        db.close();
+
+        return arrayListConta;
+    }
+
     public Conta recuperarConta(int contaNumero) {
         db = bancoDados.getReadableDatabase();
 
-        String query = "SELECT saldo,horaSaldoNegativo FROM conta WHERE conta = " + contaNumero;
+        String query = "SELECT conta,saldo,horaSaldoNegativo FROM conta WHERE conta = " + contaNumero;
 
         Cursor cursor = db.rawQuery(query, null);
         Conta conta = new Conta();
         if(cursor != null && cursor.moveToFirst()) {
             do {
+                conta.setNumero(cursor.getInt(cursor.getColumnIndex(bancoDados.COL_CONTA_NUMERO)));
                 conta.setSaldo(cursor.getFloat(cursor.getColumnIndex(bancoDados.COL_CONTA_SALDO)));
                 conta.setDataSaldoNegativo(cursor.getLong(cursor.getColumnIndex(bancoDados.COL_CONTA_DATA_SALDO_NEGATIVO)));
                 if((conta.getNumero() == contaNumero)) {
@@ -113,27 +137,6 @@ public class BDFuncoes {
         return conta;
     }
 
-    public Conta recuperarContaDestino(int contaNumero) {
-        db = bancoDados.getReadableDatabase();
-
-        String query = "SELECT conta FROM conta WHERE conta = " + contaNumero;
-
-        Cursor cursor = db.rawQuery(query, null);
-        Conta conta = new Conta();
-        if(cursor != null && cursor.moveToFirst()) {
-            do {
-                conta.setNumero(cursor.getInt(cursor.getColumnIndex(bancoDados.COL_CONTA_NUMERO)));
-                if((conta.getNumero() == contaNumero)) {
-                    break;
-                }
-            }
-            while(cursor.moveToNext());
-        }
-        cursor.close();
-        db.close();
-
-        return conta;
-    }
 
     public void alterarSaldo(int conta, float valor) {
         db = bancoDados.getWritableDatabase();

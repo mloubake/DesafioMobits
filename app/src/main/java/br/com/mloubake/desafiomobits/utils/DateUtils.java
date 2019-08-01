@@ -15,7 +15,7 @@ public class DateUtils {
 
     public static String pegarHorario() {
         Date date = new Date();
-        SimpleDateFormat horarioFormatacao = new SimpleDateFormat("hh:mm:ss");
+        SimpleDateFormat horarioFormatacao = new SimpleDateFormat("kk:mm:ss");
         String horario = horarioFormatacao.format(date);
 
         return horario;

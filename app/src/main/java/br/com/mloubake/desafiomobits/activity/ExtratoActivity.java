@@ -51,36 +51,13 @@ public class ExtratoActivity extends AppCompatActivity {
         LinearLayoutManager linearLayoutManager = new LinearLayoutManager(ExtratoActivity.this);
         linearLayoutManager.setReverseLayout(true);
         mRecyclerView.setLayoutManager(linearLayoutManager);
-        mAdapter = new MovimentacaoAdapter(ExtratoActivity.this , bdFuncoes.getMovimentacao(conta));
+        mAdapter = new MovimentacaoAdapter(ExtratoActivity.this , bdFuncoes.getMovimentacao(conta), conta);
         mRecyclerView.setAdapter(mAdapter);
     }
 
     public ArrayList<Movimentacao> getMovimentacao() {
         mMovLista = new ArrayList<>();
 
-
-        for(int i=0; i<2; i++) {
-//            Movimentacao mov1 = new Movimentacao("DIA 1","HORA 2",3f,4,5,"teste6");
-//            mMovLista.add(bdFuncoes.getMovimentacao(numeroConta).getContaOrigem());
-
-
-
-//            Movimentacao movimentacao = new Movimentacao(bdFuncoes.getMovimentacao(numeroConta).getData(),
-//                    bdFuncoes.getMovimentacao(numeroConta).getHorario(),
-//                    bdFuncoes.getMovimentacao(numeroConta).getValor(),
-//                    bdFuncoes.getMovimentacao(numeroConta).getContaOrigem(),
-//                    bdFuncoes.getMovimentacao(numeroConta).recuperarContaDestino(),
-//                    bdFuncoes.getMovimentacao(numeroConta).getTipoMov());
-
-//            movimentacao.setData(bdFuncoes.getMovimentacao(numeroConta).getData());
-//            movimentacao.setHorario(bdFuncoes.getMovimentacao(numeroConta).getHorario());
-//            movimentacao.setValor(bdFuncoes.getMovimentacao(numeroConta).getValor());
-//            movimentacao.setContaOrigem(bdFuncoes.getMovimentacao(numeroConta).getContaOrigem());
-//            movimentacao.setContaDestino(bdFuncoes.getMovimentacao(numeroConta).recuperarContaDestino());
-//            movimentacao.setTipoMov(bdFuncoes.getMovimentacao(numeroConta).getTipoMov());
-
-//            mMovLista.add(movimentacao);
-        }
         return mMovLista;
     }
 }

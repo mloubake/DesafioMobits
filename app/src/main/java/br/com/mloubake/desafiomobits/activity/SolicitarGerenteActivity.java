@@ -59,7 +59,7 @@ public class SolicitarGerenteActivity extends AppCompatActivity {
     }
 
     private void solicitacao() {
-        float saldo = bdFuncoes.recuperarSaldo(conta).getSaldo();
+        float saldo = bdFuncoes.recuperarConta(conta).getSaldo();
         float valorGerente = 50.00f;
 
         saldo -= valorGerente;

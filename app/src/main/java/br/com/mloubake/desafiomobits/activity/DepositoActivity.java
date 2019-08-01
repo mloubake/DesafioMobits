@@ -9,10 +9,13 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
 
+import java.util.Date;
+
 import br.com.mloubake.desafiomobits.R;
 import br.com.mloubake.desafiomobits.database.BDFuncoes;
 import br.com.mloubake.desafiomobits.model.Movimentacao;
 import br.com.mloubake.desafiomobits.utils.DateUtils;
+import br.com.mloubake.desafiomobits.utils.JurosUtils;
 import br.com.mloubake.desafiomobits.utils.TextoUtils;
 
 public class DepositoActivity extends AppCompatActivity {
@@ -30,7 +33,7 @@ public class DepositoActivity extends AppCompatActivity {
     float valorDepositado;
     int conta;
     float saldo;
-    float addSaldo;
+    float saldoAtualizado;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -76,14 +79,27 @@ public class DepositoActivity extends AppCompatActivity {
             valorDepositado = Float.parseFloat(etDeposito.getText().toString());
         }
 
-        saldo = bdFuncoes.recuperarSaldo(conta).getSaldo();
-        addSaldo = saldo + valorDepositado;
-        bdFuncoes.alterarSaldo(conta, addSaldo);
-
-        bdFuncoes.registrarMovimentacao(new Movimentacao(DateUtils.pegarData(), DateUtils.pegarHorario(),
-                valorDepositado, conta, "Depósito"));
-
-        validarValor();
+        if(valorDepositado > 0) {
+            saldo = bdFuncoes.recuperarConta(conta).getSaldo();
+            if(saldo < 0) {
+                long horarioSaldoNegativo = bdFuncoes.getHoraSaldoNegativo(conta).getDataSaldoNegativo();
+                float saldoComJurosAdicionado = JurosUtils.calcularJurosNegativo(saldo, horarioSaldoNegativo);
+                saldoAtualizado = saldoComJurosAdicionado + valorDepositado;
+                bdFuncoes.alterarSaldo(conta, saldoAtualizado);
+                bdFuncoes.registrarMovimentacao(new Movimentacao(DateUtils.pegarData(), DateUtils.pegarHorario(),
+                        valorDepositado, conta, "Depósito"));
+                saldo = saldoAtualizado;
+                if(saldo >= 0) {
+                    bdFuncoes.alterarDataSaldoNegatico(conta, 0);
+                } else {
+                    //Assumindo que o valor da dívida atualiza quando são feitos novos depósitos
+                    bdFuncoes.setHoraSaldoNegativo(conta, new Date().getTime());
+                }
+            }
+            validarValor();
+        } else {
+            validarValor();
+        }
     }
 
     private void validarValor() {

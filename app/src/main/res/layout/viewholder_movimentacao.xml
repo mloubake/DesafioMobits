@@ -110,14 +110,14 @@
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
-                    android:text="Conta"
+                    android:text="Origem   "
                     android:textSize="12sp"/>
                 <TextView
                     android:id="@+id/txtContaDescDestino"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
-                    android:text="Destinatário"
+                    android:text="Destino"
                     android:textSize="12sp"/>
             </LinearLayout>
             <LinearLayout

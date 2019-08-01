@@ -9,8 +9,6 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
 
-import java.text.NumberFormat;
-
 import br.com.mloubake.desafiomobits.R;
 import br.com.mloubake.desafiomobits.database.BDFuncoes;
 import br.com.mloubake.desafiomobits.model.Movimentacao;
@@ -94,28 +92,31 @@ public class TransferenciaActivity extends AppCompatActivity {
         }
 
         if(etContaDestino.getText().toString().equals(String.valueOf(contaOrigem))) {
-            Toast.makeText(this, "Conta Corrente inválida, por favor, verifique, o número da conta digitado",
+            Toast.makeText(this, "Conta Corrente inválida, por favor, verifique o número da numeroConta digitado",
                     Toast.LENGTH_SHORT).show();
         } else {
-            float saldo = bdFuncoes.recuperarSaldo(contaOrigem).getSaldo();
-            float subSaque = saldo - valorTransferido;
-            float saldoInicialDeposito = bdFuncoes.recuperarSaldo(contaDestino).getSaldo();
+            float saldoContaOrigem = bdFuncoes.recuperarConta(contaOrigem).getSaldo();
+            float subSaque = saldoContaOrigem - valorTransferido;
+            float saldoInicialDeposito = bdFuncoes.recuperarConta(contaDestino).getSaldo();
             float addSaque = saldoInicialDeposito + valorTransferido;
 
             if(tipo.matches("Normal")) {
-                if(valorTransferido > 0 && valorTransferido < 1000) {
+                if(valorTransferido > 0 && valorTransferido <= 1000) {
                     if(!String.valueOf(bdFuncoes.recuperarContaDestino(contaDestino).getNumero()).matches(String.valueOf(contaDestino))) {
+
                         Toast.makeText(this, "Conta inexistente", Toast.LENGTH_SHORT).show();
                     } else {
-                        bdFuncoes.transferencia(contaOrigem, contaDestino, subSaque, addSaque);
-                        saldo = bdFuncoes.recuperarSaldo(contaOrigem).getSaldo();
-                        float taxa = saldo - 8;
-                        bdFuncoes.alterarSaldo(contaOrigem, taxa);
+
+                        bdFuncoes.transferirSaldo(contaOrigem, contaDestino, subSaque, addSaque);
+                        float saldoContaDestino = bdFuncoes.recuperarConta(contaDestino).getSaldo();
+//                        if()
+
+                        saldoContaOrigem = bdFuncoes.recuperarConta(contaOrigem).getSaldo();
+                        float saldoTaxado = saldoContaOrigem - 8;
+                        bdFuncoes.alterarSaldo(contaOrigem, saldoTaxado);
                         validarValor();
                         bdFuncoes.registrarMovimentacao(new Movimentacao(DateUtils.pegarData(), DateUtils.pegarHorario(), valorTransferido,
-                                contaOrigem, contaDestino, "Transferência + Taxa de: R$ " + TextoUtils.formatarDuasCasasDecimais(TAXA_CONTA_NORMAL)));
-
-                        NumberFormat aaa = NumberFormat.getCurrencyInstance();
+                                contaOrigem, contaDestino, "Transferência" +" + Taxa de: R$ " + TextoUtils.formatarDuasCasasDecimais(TAXA_CONTA_NORMAL)));
                     }
                 } else {
                     Toast.makeText(this, "Valor inválido", Toast.LENGTH_SHORT).show();
@@ -125,10 +126,10 @@ public class TransferenciaActivity extends AppCompatActivity {
                 if(!String.valueOf(bdFuncoes.recuperarContaDestino(contaDestino).getNumero()).matches(String.valueOf(contaDestino))) {
                     Toast.makeText(this, "Conta inexistente", Toast.LENGTH_SHORT).show();
                 } else {
-                    bdFuncoes.transferencia(contaOrigem, contaDestino, subSaque, addSaque);
-                    saldo = bdFuncoes.recuperarSaldo(contaOrigem).getSaldo();
+                    bdFuncoes.transferirSaldo(contaOrigem, contaDestino, subSaque, addSaque);
+                    saldoContaOrigem = bdFuncoes.recuperarConta(contaOrigem).getSaldo();
                     float taxa = valorTransferido * TAXA_CONTA_VIP / 100;
-                    float saldoFinal = saldo - taxa;
+                    float saldoFinal = saldoContaOrigem - taxa;
                     bdFuncoes.alterarSaldo(contaOrigem, saldoFinal);
 
                     validarValor();
@@ -141,7 +142,7 @@ public class TransferenciaActivity extends AppCompatActivity {
 
     public void validarValor() {
         if(valorTransferido > 0) {
-            Toast.makeText(TransferenciaActivity.this, "Transferência Efetuada: R$ " + valorTransferido, Toast.LENGTH_SHORT).show();
+            Toast.makeText(TransferenciaActivity.this, "Transferência Efetuada: R$ " + TextoUtils.formatarDuasCasasDecimais(valorTransferido), Toast.LENGTH_SHORT).show();
         }
         else {
             Toast.makeText(TransferenciaActivity.this, "Transferência inválida, por favor, verifique o valor", Toast.LENGTH_SHORT).show();

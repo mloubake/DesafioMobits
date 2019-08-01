@@ -25,21 +25,22 @@
     <show-object-properties value="false" />
     <loaded-nodes>
       <connection connection-id="2077d14d-c381-4b33-ab75-0788cd6854d7">
-        <schema name="main" object-types="view, table, index, constraint, column, dataset trigger" />
+        <schema name="main" object-types="view, table" />
       </connection>
     </loaded-nodes>
   </component>
   <component name="DBNavigator.Project.DatabaseConsoleManager">
     <connection id="2077d14d-c381-4b33-ab75-0788cd6854d7">
-      <console name="Connection" type="STANDARD" schema="main" session="Main"><![CDATA[select * from usuario as u, conta as c  where u.conta = c.conta]]></console>
-      <console name="DB Desafio Mobits" type="STANDARD" schema="main" session="Main"><![CDATA[select * from usuario;]]></console>
+      <console name="Connection" type="STANDARD" schema="main" session="Main"><![CDATA[select * from conta]]></console>
     </connection>
   </component>
   <component name="DBNavigator.Project.DatabaseFileManager">
     <open-files />
   </component>
   <component name="DBNavigator.Project.DatabaseSessionManager">
-    <connection id="2077d14d-c381-4b33-ab75-0788cd6854d7" />
+    <connection id="2077d14d-c381-4b33-ab75-0788cd6854d7">
+      <session name="Session 1" id="5c053460-3412-4683-958d-421669d2f920" />
+    </connection>
   </component>
   <component name="DBNavigator.Project.EditorStateManager">
     <last-used-providers />

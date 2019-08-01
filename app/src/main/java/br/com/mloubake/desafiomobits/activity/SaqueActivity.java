@@ -4,10 +4,14 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.text.TextUtils;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
+
+import java.util.Date;
+
 import br.com.mloubake.desafiomobits.R;
 import br.com.mloubake.desafiomobits.database.BDFuncoes;
 import br.com.mloubake.desafiomobits.model.Movimentacao;
@@ -24,7 +28,7 @@ public class SaqueActivity extends AppCompatActivity {
     BDFuncoes bdFuncoes;
 
     float valorSacado;
-    int conta;
+    int numeroConta;
     String tipo;
     float saldo;
 
@@ -47,7 +51,7 @@ public class SaqueActivity extends AppCompatActivity {
     private void getBundleMenu() {
         Intent intent = getIntent();
         if(intent != null) {
-            conta = getIntent().getExtras().getInt("numeroConta");
+            numeroConta = getIntent().getExtras().getInt("numeroConta");
             tipo = getIntent().getExtras().getString("tipo");
         }
     }
@@ -62,48 +66,56 @@ public class SaqueActivity extends AppCompatActivity {
         btnSacar.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                sacarSaldo();
+                sacarValor();
             }
         });
     }
 
-    public void sacarSaldo() {
+    public void sacarValor() {
         valorSacado= 0f;
         if(!TextUtils.isEmpty(etSaque.getText())) {
             valorSacado = Float.parseFloat(etSaque.getText().toString());
         }
 
-        saldo = bdFuncoes.recuperarSaldo(conta).getSaldo();
+        saldo = bdFuncoes.recuperarConta(numeroConta).getSaldo();
 
         if(tipo.matches("VIP")) {
             saldo -= valorSacado;
-            bdFuncoes.alterarSaldo(conta, saldo);
-            bdFuncoes.registrarMovimentacao(new Movimentacao(DateUtils.pegarData(), DateUtils.pegarHorario(), valorSacado,
-                    conta,"Saque"));
-            validarValor();
+            bdFuncoes.alterarSaldo(numeroConta, saldo);
+            bdFuncoes.registrarMovimentacao(new Movimentacao(DateUtils.pegarData(), DateUtils.pegarHorario(), -valorSacado,
+                    numeroConta,"Saque"));
 
+            if(saldo < 0) {
+                Date date = new Date();
+                long horarioSaldoNeg = date.getTime();
+                bdFuncoes.setHoraSaldoNegativo(numeroConta, horarioSaldoNeg);
+            }
+            validarValor();
         }
+
         if(tipo.matches("Normal")) {
-            if(valorSacado < saldo && valorSacado > 0) {
+            if(valorSacado > 0 && valorSacado < saldo) {
                 saldo -= valorSacado;
-                bdFuncoes.alterarSaldo(conta, saldo);
+                bdFuncoes.alterarSaldo(numeroConta, saldo);
 
                 bdFuncoes.registrarMovimentacao(new Movimentacao(DateUtils.pegarData(), DateUtils.pegarHorario(), valorSacado,
-                        conta,"Saque"));
-                validarValor();
+                        numeroConta,"Saque"));
+                Toast.makeText(SaqueActivity.this, "Saque Efetuado: R$" + TextoUtils.formatarDuasCasasDecimais(valorSacado), Toast.LENGTH_SHORT).show();
 
+            } else if (valorSacado <= 0) {
+                Toast.makeText(SaqueActivity.this, "Saque inválido, por favor, verifique o valor sacado.", Toast.LENGTH_SHORT).show();
             } else {
-                Toast.makeText(SaqueActivity.this,"Impossível realizar saque. Valor sacado além do permitido ", Toast.LENGTH_LONG).show();
+                Toast.makeText(SaqueActivity.this,"Impossível realizar saque. Saldo insuficiente.", Toast.LENGTH_LONG).show();
             }
         }
     }
 
+    //TODO Verificar este método
     private void validarValor() {
         if(valorSacado > 0) {
             Toast.makeText(SaqueActivity.this, "Saque Efetuado: R$" + TextoUtils.formatarDuasCasasDecimais(valorSacado), Toast.LENGTH_SHORT).show();
-        }
-        else {
-            Toast.makeText(SaqueActivity.this, "Saque inválido, por favor, verifique o valor sacado", Toast.LENGTH_SHORT).show();
+        } else if (valorSacado == 0) {
+            Toast.makeText(SaqueActivity.this, "Saque inválido, por favor, verifique o valor sacado.", Toast.LENGTH_SHORT).show();
         }
     }
 }

@@ -107,10 +107,10 @@ public class LoginActivity extends AppCompatActivity {
             bdFuncoes.popularUsuario(new Usuario(55555, 5555,"VIP"));
 
             bdFuncoes.popularConta(new Conta(11111,12345.56f));
-            bdFuncoes.popularConta(new Conta(22222, 987.65f));
-            bdFuncoes.popularConta(new Conta(33333, 0));
+            bdFuncoes.popularConta(new Conta(22222, 1500f));
+            bdFuncoes.popularConta(new Conta(33333, 0f));
             bdFuncoes.popularConta(new Conta(44444, -999999.99f));
-            bdFuncoes.popularConta(new Conta(55555, 500));
+            bdFuncoes.popularConta(new Conta(55555, 500.00f));
         } else {
             Log.d(TAG, "popularBD ELSE: " + checkarBd);
         }

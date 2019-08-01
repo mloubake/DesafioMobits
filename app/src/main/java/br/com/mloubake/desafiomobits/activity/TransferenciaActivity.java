@@ -81,7 +81,6 @@ public class TransferenciaActivity extends AppCompatActivity {
         if(!TextUtils.isEmpty(etValor.getText())){
             valorTransferido = Float.parseFloat(etValor.getText().toString());
         }
-
         if(etContaDestino.getText().length() < 5) {
             Toast.makeText(this, "Conta Corrente deve conter 5 digitos", Toast.LENGTH_SHORT).show();
             return;

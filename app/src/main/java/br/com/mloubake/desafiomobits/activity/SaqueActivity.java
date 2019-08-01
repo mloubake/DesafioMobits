@@ -16,6 +16,7 @@ import br.com.mloubake.desafiomobits.R;
 import br.com.mloubake.desafiomobits.database.BDFuncoes;
 import br.com.mloubake.desafiomobits.model.Movimentacao;
 import br.com.mloubake.desafiomobits.utils.DateUtils;
+import br.com.mloubake.desafiomobits.utils.JurosUtils;
 import br.com.mloubake.desafiomobits.utils.TextoUtils;
 
 public class SaqueActivity extends AppCompatActivity {
@@ -86,9 +87,7 @@ public class SaqueActivity extends AppCompatActivity {
                     numeroConta,"Saque"));
 
             if(saldo < 0) {
-                Date date = new Date();
-                long horarioSaldoNeg = date.getTime();
-                bdFuncoes.setHoraSaldoNegativo(numeroConta, horarioSaldoNeg);
+                JurosUtils.setHoraSaldoNegativo(bdFuncoes, numeroConta);
             }
             validarValor();
         }
@@ -118,4 +117,7 @@ public class SaqueActivity extends AppCompatActivity {
             Toast.makeText(SaqueActivity.this, "Saque inválido, por favor, verifique o valor sacado.", Toast.LENGTH_SHORT).show();
         }
     }
+
+
+
 }

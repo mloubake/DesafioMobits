@@ -252,20 +252,6 @@ public class BDFuncoes {
 
         return conta;
     }
-
-    public void alterarDataSaldoNegatico(int conta, long horarioSaldoNegativo) {
-        db = bancoDados.getWritableDatabase();
-        valores = new ContentValues();
-        valores.put(bancoDados.COL_CONTA_DATA_SALDO_NEGATIVO, horarioSaldoNegativo);
-
-        db.update(bancoDados.TABELA_CONTA,
-                valores,
-                bancoDados.COL_CONTA_NUMERO + "= ?",
-                new String[] {String.valueOf(conta)});
-        db.close();
-    }
-
-
 }
 
 

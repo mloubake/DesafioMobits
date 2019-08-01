@@ -9,8 +9,6 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
 
-import java.util.Date;
-
 import br.com.mloubake.desafiomobits.R;
 import br.com.mloubake.desafiomobits.database.BDFuncoes;
 import br.com.mloubake.desafiomobits.model.Movimentacao;
@@ -31,7 +29,7 @@ public class DepositoActivity extends AppCompatActivity {
     BDFuncoes bdFuncoes;
 
     float valorDepositado;
-    int conta;
+    int numeroConta;
     float saldo;
     float saldoAtualizado;
 
@@ -54,7 +52,7 @@ public class DepositoActivity extends AppCompatActivity {
     private void getBundleMenu() {
         Intent intent = getIntent();
         if(intent != null) {
-            conta = getIntent().getExtras().getInt("numeroConta");
+            numeroConta = getIntent().getExtras().getInt("numeroConta");
         }
     }
 
@@ -80,22 +78,15 @@ public class DepositoActivity extends AppCompatActivity {
         }
 
         if(valorDepositado > 0) {
-            saldo = bdFuncoes.recuperarConta(conta).getSaldo();
+            saldo = bdFuncoes.recuperarConta(numeroConta).getSaldo();
             if(saldo < 0) {
-                long horarioSaldoNegativo = bdFuncoes.getHoraSaldoNegativo(conta).getDataSaldoNegativo();
-                float saldoComJurosAdicionado = JurosUtils.calcularJurosNegativo(saldo, horarioSaldoNegativo);
-                saldoAtualizado = saldoComJurosAdicionado + valorDepositado;
-                bdFuncoes.alterarSaldo(conta, saldoAtualizado);
-                bdFuncoes.registrarMovimentacao(new Movimentacao(DateUtils.pegarData(), DateUtils.pegarHorario(),
-                        valorDepositado, conta, "Depósito"));
-                saldo = saldoAtualizado;
-                if(saldo >= 0) {
-                    bdFuncoes.alterarDataSaldoNegatico(conta, 0);
-                } else {
-                    //Assumindo que o valor da dívida atualiza quando são feitos novos depósitos
-                    bdFuncoes.setHoraSaldoNegativo(conta, new Date().getTime());
-                }
+                JurosUtils.atualizaSaldoComJuros(bdFuncoes, numeroConta, saldo, valorDepositado);
+            } else {
+                float somaSaldo = saldo + valorDepositado;
+                bdFuncoes.alterarSaldo(numeroConta, somaSaldo);
             }
+            bdFuncoes.registrarMovimentacao(new Movimentacao(DateUtils.pegarData(), DateUtils.pegarHorario(),
+                    valorDepositado, numeroConta, "Depósito"));
             validarValor();
         } else {
             validarValor();
@@ -110,4 +101,5 @@ public class DepositoActivity extends AppCompatActivity {
             Toast.makeText(DepositoActivity.this, "Depósito inválido, por favor, verifique o valor depositado", Toast.LENGTH_SHORT).show();
         }
     }
+
 }

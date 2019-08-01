@@ -2,6 +2,8 @@ package br.com.mloubake.desafiomobits.utils;
 
 import java.util.Date;
 
+import br.com.mloubake.desafiomobits.database.BDFuncoes;
+
 public class JurosUtils {
     private static final float TAXA_COMPOSTA = 0.001f;
 
@@ -13,5 +15,29 @@ public class JurosUtils {
 
         //TODO Colocar a formula do calc do juros composto como comentário
         return montante;
+    }
+
+    public static void setHoraSaldoNegativo(BDFuncoes bdFuncoes, int numeroConta) {
+        Date date = new Date();
+        long horarioSaldoNeg = date.getTime();
+        bdFuncoes.setHoraSaldoNegativo(numeroConta, horarioSaldoNeg);
+    }
+
+    public static void atualizaSaldoComJuros(BDFuncoes bdFuncoes, int numeroConta, float saldo, float valorDepositado) {
+        long horarioSaldoNegativo = bdFuncoes.getHoraSaldoNegativo(numeroConta).getDataSaldoNegativo();
+        float saldoComJurosAdicionado = JurosUtils.calcularJurosNegativo(saldo, horarioSaldoNegativo);
+        float saldoAtualizado = saldoComJurosAdicionado + valorDepositado;
+        bdFuncoes.alterarSaldo(numeroConta, saldoAtualizado);
+
+        atualizaHoraSaldoNegativo(bdFuncoes, numeroConta, saldoAtualizado);
+    }
+
+    public static void atualizaHoraSaldoNegativo(BDFuncoes bdFuncoes, int numeroConta, float saldo ) {
+        if(saldo >= 0) {
+            bdFuncoes.setHoraSaldoNegativo(numeroConta, 0);
+        } else {
+            //Assumindo que o valor da dívida atualiza quando são feitos novos depósitos
+            bdFuncoes.setHoraSaldoNegativo(numeroConta, new Date().getTime());
+        }
     }
 }
